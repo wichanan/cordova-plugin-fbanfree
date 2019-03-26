@@ -1,0 +1,31 @@
+{
+  "name": "cordova-plugin-fbanfree",
+  "version": "0.0.1",
+  "description": "Cordova Facebook Audience Network Free Plugin",
+  "cordova": {
+    "id": "cordova-plugin-fbanfree",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wichanan/cordova-plugin-fbanfree.git"
+  },
+  "keywords": [
+    "cordova",
+    "facebookaudiencenetworkfree",
+    "facebook ad",
+    "audience network",
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android"
+  ],
+  "author": "Wichanan Thian",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/wichanan/cordova-plugin-fbanfree/issues"
+  },
+  "homepage": "https://github.com/wichanan/cordova-plugin-fbanfree#readme"
+}

@@ -1,2 +1,32 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="cordova-plugin-fbanfree" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0"><name>FBANFree</name><description>Cordova Facebook Audience Network Free Plugin</description><license>Apache 2.0</license><keywords>cordova,facebookaudiencenetworkfree, facebook ad, audience network</keywords><js-module name="FBANFree" src="www/FBANFree.js"><clobbers target="cordova.plugins.FBANFree" /></js-module><platform name="ios"><config-file parent="/*" target="config.xml"><feature name="FBANFree"><param name="ios-package" value="FBANFree" /></feature></config-file><source-file src="src/ios/FBANFree.m" /></platform><platform name="android"><config-file parent="/*" target="res/xml/config.xml"><feature name="FBANFree"><param name="android-package" value="cordova-plugin-fbanfree.FBANFree" /></feature></config-file><config-file parent="/*" target="AndroidManifest.xml"></config-file><source-file src="src/android/FBANFree.java" target-dir="src/cordova-plugin-fbanfree/FBANFree" /></platform></plugin>
+<plugin id="cordova-plugin-fbanfree" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0">
+	<name>FBANFree</name>
+	<description>Cordova Facebook Audience Network Free Plugin</description>
+	<license>Apache 2.0</license>
+	<keywords>cordova,facebookaudiencenetworkfree, facebook ad, audience network</keywords>
+	<js-module name="FBANFree" src="www/FBANFree.js"
+		><clobbers target="cordova.plugins.FBANFree" />
+	</js-module>
+	<dependency id="cordova-plugin-cocoapod-support"/>
+	<platform name="ios">
+		<pods-config ios-min-version="9.0" />
+		<config-file parent="/*" target="config.xml">
+			<feature name="FBANFree">
+				<param name="ios-package" value="FBANFree" />
+			</feature>
+		</config-file>
+
+		<header-file src="src/ios/FBANFree-Bridging-Header.h" />
+		<source-file src="src/ios/FBANFree.swift" />
+
+		<dependency id="cordova-plugin-add-swift-support" version="^1.7.2"/>
+		<pod name="FBAudienceNetwork" spec="~> 5.2" />
+	</platform>
+	<platform name="android">
+		<config-file parent="/*" target="res/xml/config.xml">
+			<feature name="FBANFree"><param name="android-package" value="cordova-plugin-fbanfree.FBANFree" /></feature>
+		</config-file>
+		<config-file parent="/*" target="AndroidManifest.xml"></config-file>
+		<source-file src="src/android/FBANFree.java" target-dir="src/cordova-plugin-fbanfree/FBANFree" />
+	</platform>
+</plugin>
