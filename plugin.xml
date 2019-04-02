@@ -4,8 +4,8 @@
 	<description>Cordova Facebook Audience Network Free Plugin</description>
 	<license>Apache 2.0</license>
 	<keywords>cordova,facebookaudiencenetworkfree, facebook ad, audience network</keywords>
-	<js-module name="FBANFree" src="www/FBANFree.js"
-		><clobbers target="cordova.plugins.FBANFree" />
+	<js-module name="FBANFree" src="www/FBANFree.js">
+		<clobbers target="cordova.plugins.FBANFree" />
 	</js-module>
 	<dependency id="cordova-plugin-cocoapod-support"/>
 	<platform name="ios">

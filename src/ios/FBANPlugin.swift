@@ -1,11 +1,12 @@
-//
-//  FBANFree.swift
-//  
-//
-//  Created by Wichanan on 3/25/19.
-//
+@objc(FBANPlugin)
+class FBANPlugin: CDVPlugin {
+    @static let testAdID = ""
 
-@objc(FBANFree) class FBANFree: CDVPlugin {
+    override func pluginInitialize() {
+        super.pluginInitialize()
+    }
+
+    @objc(echo:)
     func echo(command: CDVInvokedUrlCommand) {
         var pluginResult = CDVPluginResult(
             status: CDVCommandStatus_ERROR
@@ -28,7 +29,7 @@
                 completion: nil
             )
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(3000)) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 toastController.dismiss(
                     animated: true,
                     completion: nil
