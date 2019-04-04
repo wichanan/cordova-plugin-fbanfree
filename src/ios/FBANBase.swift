@@ -6,7 +6,7 @@ class FBANFreeBase: NSObject {
         // tba
     }
 
-    init(id: Int, adUnitID: String) {
+    init(placementID: String) {
         super.init()
 
         FBANFreeBase.ads[id] = self
