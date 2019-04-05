@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="cordova-plugin-fbanfree" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0">
+<plugin id="cordova-plugin-fbanfree" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
 	<name>FBANFree</name>
 	<description>Cordova Facebook Audience Network Free Plugin</description>
 	<license>Apache 2.0</license>
@@ -7,12 +7,17 @@
 	<js-module name="FBANFree" src="www/FBANFree.js">
 		<clobbers target="cordova.plugins.FBANFree" />
 	</js-module>
+
+	<engines>
+        <engine name="cordova" version=">=7.0.0" />
+        <engine name="cordova-android" version=">=6.0.0" />
+    </engines>
 	<dependency id="cordova-plugin-cocoapod-support"/>
 	<platform name="ios">
 		<pods-config ios-min-version="9.0" />
 		<config-file parent="/*" target="config.xml">
-			<feature name="FBANFree">
-				<param name="ios-package" value="FBANFree" />
+			<feature name="FBAN">
+				<param name="ios-package" value="FBANPlugin" />
 			</feature>
 		</config-file>
 
@@ -23,10 +28,18 @@
 		<pod name="FBAudienceNetwork" spec="~> 5.2" />
 	</platform>
 	<platform name="android">
+		<preference name="ANDROID_SUPPORT_RECYCLERVIEW_VERSION" default="27+" />
 		<config-file parent="/*" target="res/xml/config.xml">
-			<feature name="FBANFree"><param name="android-package" value="cordova-plugin-fbanfree.FBANFree" /></feature>
+			<feature name="FBAN"><param name="android-package" value="fban.plugin.FBAN" /></feature>
 		</config-file>
-		<config-file parent="/*" target="AndroidManifest.xml"></config-file>
-		<source-file src="src/android/FBANFree.java" target-dir="src/cordova-plugin-fbanfree/FBANFree" />
+		<config-file parent="/*" target="AndroidManifest.xml">
+			<meta-data
+                android:hardwareAccelerated="true" />
+		</config-file>
+
+		<framework src="com.android.support:recyclerview-v7:$ANDROID_SUPPORT_RECYCLERVIEW_VERSION" />
+		<framework src="com.facebook.android:audience-network-sdk:5.+" />
+
+		<source-file src="src/android/FBAN.java" target-dir="src/android/FBAN.java" />
 	</platform>
 </plugin>

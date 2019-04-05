@@ -1,4 +1,4 @@
-package cordova-plugin-fbanfree;
+package fban.plugin;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
