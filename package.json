@@ -39,6 +39,8 @@
     "facebook ad",
     "audience network",
     "ecosystem:cordova",
+    "cordova-facebook-audience-network"
+    "cordova-facebook-audience-network-free"
     "cordova-ios",
     "cordova-android"
   ],

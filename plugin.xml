@@ -5,7 +5,7 @@
 	<license>Apache 2.0</license>
 	<keywords>cordova,facebookaudiencenetworkfree, facebook ad, audience network</keywords>
 	<js-module name="FBANFree" src="www/FBANFree.js">
-		<clobbers target="cordova.plugins.FBANFree" />
+		<clobbers target="fbanfree" />
 	</js-module>
 
 	<engines>
@@ -25,7 +25,7 @@
 		<source-file src="src/ios/FBANFree.swift" />
 
 		<dependency id="cordova-plugin-add-swift-support" version="^2.0.2"/>
-		<pod name="FBAudienceNetwork" spec="~> 5.2" />
+		<pod name="FBAudienceNetwork" spec="~> 5.3.1" />
 	</platform>
 	<platform name="android">
 		<preference name="ANDROID_SUPPORT_RECYCLERVIEW_VERSION" default="27+" />
