@@ -22,7 +22,7 @@
 		</config-file>
 
 		<header-file src="src/ios/FBANFree-Bridging-Header.h" />
-		<source-file src="src/ios/FBANFree.swift" />
+		<source-file src="src/ios/FBANBase.swift" />
 
 		<dependency id="cordova-plugin-add-swift-support" version="^2.0.2"/>
 		<pod name="FBAudienceNetwork" spec="~> 5.3.1" />

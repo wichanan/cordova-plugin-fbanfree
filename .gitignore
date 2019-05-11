@@ -1,0 +1,12 @@
+# ignore following files
+.DS_Store
+.settings
+.idea
+*.iml
+*.log
+*.lock
+node_modules/
+coverage/
+www/
+gh-pages/
+package-lock.json

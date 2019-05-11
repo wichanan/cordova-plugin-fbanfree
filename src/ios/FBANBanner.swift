@@ -14,7 +14,7 @@ class FBANBanner: FBAdViewDelegate {
     	adView = nil
     }
 
-    func show() {
+    func prepareBanner() {
         self.adView = FBAdView(placementID: placementID, adSize: self.adSize, rootViewController: self)
         let size: CGSize = self.view.bounds.size
         let yOffset: CGFloat = size.height - 50
