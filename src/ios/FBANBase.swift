@@ -1,25 +1,28 @@
-class FBANFreeBase: NSObject {
+class FBANBase: NSObject {
     static var ads = Dictionary<Int, Any>()
     static weak var plugin: FBANPlugin!
 
-    var plugin: AMSPlugin {
-        // tba
+    var placementID: String!
+
+    var plugin: FBANPlugin {
+        return FBANBase.plugin
     }
 
     init(placementID: String) {
         super.init()
-
-        FBANFreeBase.ads[id] = self
+        
+        self.placementID = placementID
+        FBANBase.ads[placementID] = self
     }
 
     deinit {
-        FBANFreeBase.ads.removeValue(forKey: self.id)
+        FBANBase.ads.removeValue(forKey: self.id)
         self.adUnitID = nil
     }
 
-    func fitAds() {
-        for (_, ad) in FBANFreeBase.ads {
+    //func fitAds() {
+        //for (_, ad) in FBANBase.ads {
             // tba
-        }
-    }
+        //}
+    //}
 }
