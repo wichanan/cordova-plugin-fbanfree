@@ -27,7 +27,7 @@ class FBANBanner: FBAdViewDelegate {
 
     func showBanner() {
         if (self.adView != nil && self.adView!.isAdValid) {
-            plugin.viewController.addSubview(self.adView!)
+            plugin.viewController.view.addSubview(self.adView!)
         }
     }
 
