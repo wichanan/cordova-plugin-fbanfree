@@ -1,9 +1,16 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="cordova-plugin-fbanfree" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="cordova-plugin-fbanfree"
+	version="0.0.1"
+	xmlns="http://apache.org/cordova/ns/plugins/1.0"
+	xmlns:android="http://schemas.android.com/apk/res/android">
 	<name>FBANFree</name>
 	<description>Cordova Facebook Audience Network Free Plugin</description>
-	<license>Apache 2.0</license>
-	<keywords>cordova,facebookaudiencenetworkfree, facebook ad, audience network</keywords>
+	<license>MIT</license>
+	<keywords>cordova,facebookaudiencenetworkfree, facebook ad, audience network,
+		cordova-ios, cordova-android, ecosystem:cordova, android, ios,
+        money, monetization, iad, services, play, earn, publicity, advertisment, advertising,
+        ads, ad
+	</keywords>
 	<js-module name="FBANFree" src="www/FBANFree.js">
 		<clobbers target="fbanfree" />
 	</js-module>

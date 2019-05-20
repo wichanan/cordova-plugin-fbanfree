@@ -20,40 +20,30 @@ class FBANPlugin: CDVPlugin {
         }
         if banner == nil {
             let adSize = getAdSize(opts)
-            banner = AMSBanner(id: id, adUnitID: adUnitID, adSize: adSize, position: position)
+            banner = FBANBanner(placementID: placementID, adSize: adSize, position: position)
         }
-        banner!.show(request: createGADRequest(opts))
+        banner!.show_banner()
 
         let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: true)
         self.commandDelegate!.send(result, callbackId: command.callbackId)
     }
 
-    func getAdSize(_ opts: NSDictionary) -> GADAdSize {
+    func getAdSize(_ opts: NSDictionary) -> FBAdSize {
         if let adSizeType = opts.value(forKey: "adSize") as? Int {
             switch adSizeType {
             case 0:
-                return kGADAdSizeBanner
+                return kFBAdSizeHeight90Banner
             case 1:
-                return kGADAdSizeLargeBanner
+                return kFBAdSizeHeight50Banner
             case 2:
-                return kGADAdSizeMediumRectangle
+                return kFBAdSizeHeight250Rectangle
             case 3:
-                return kGADAdSizeFullBanner
-            case 4:
-                return kGADAdSizeLeaderboard
-            default: break
+                return kFBAdSize320x50
+            default:
+                break;
             }
         }
-        guard let adSizeDict = opts.value(forKey: "size") as? NSDictionary,
-            let width = adSizeDict.value(forKey: "width") as? Int,
-            let height = adSizeDict.value(forKey: "height") as? Int
-            else {
-                if UIDevice.current.orientation.isPortrait {
-                    return kGADAdSizeSmartBannerPortrait
-                } else {
-                    return kGADAdSizeSmartBannerLandscape
-                }
-        }
-        return GADAdSizeFromCGSize(CGSize(width: width, height: height))
+        
+        return kFBAdSizeHeight50Banner
     }
 }
