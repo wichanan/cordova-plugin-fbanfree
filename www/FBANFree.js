@@ -2,10 +2,9 @@
 import { exec } from './driver'
 
 export function showBanner() {
-    return exec('showBanner', [])
+    return exec('banner_show', [])
 }
 
-export function prepareBanner() {
-    return exec('prepareBanner', [])
+export function prepareInterstitial() {
+    return exec('interstitial_load')
 }
-

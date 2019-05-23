@@ -12,7 +12,7 @@ class FBANPlugin: CDVPlugin {
             let id = opts.value(forKey: "id") as? Int,
             let placementID = opts.value(forKey: "placementID") as? String,
             let position = opts.value(forKey: "position") as? String,
-            var banner = FBANBase.ads[id] as? FBANBBanner?
+            var banner = FBANBase.ads[id] as? FBANBanner?
             else {
                 let result = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: false)
                 self.commandDelegate!.send(result, callbackId: command.callbackId)
@@ -23,6 +23,48 @@ class FBANPlugin: CDVPlugin {
             banner = FBANBanner(placementID: placementID, adSize: adSize, position: position)
         }
         banner!.show_banner()
+
+        let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: true)
+        self.commandDelegate!.send(result, callbackId: command.callbackId)
+    }
+
+    @objc(interstitial_show:)
+    func interstitial_show(command: CDVInvokedUrlCommand) {
+        guard let opts = command.argument(at: 0) as? NSDictionary,
+            let id = opts.value(forKey: "id") as? Int,
+            let placementID = opts.value(forKey: "placementID") as? String,
+            var interstitial = FBANBase.ads[id] as? FBANInterstitial?
+            else {
+                let result = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: false)
+                self.commandDelegate!.send(result, callbackId: command.callbackId)
+                return
+        }
+        if interstitial == nil {
+            let adSize = getAdSize(opts)
+            interstitial = FBANInterstitial(placementID: placementID)
+        }
+        interstitial!.show()
+
+        let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: true)
+        self.commandDelegate!.send(result, callbackId: command.callbackId)
+    }
+
+    @objc(reward_video_show:)
+    func reward_video_show(command: CDVInvokedUrlCommand) {
+        guard let opts = command.argument(at: 0) as? NSDictionary,
+            let id = opts.value(forKey: "id") as? Int,
+            let placementID = opts.value(forKey: "placementID") as? String,
+            var reward_video = FBANBase.ads[id] as? FBANRewardVideo?
+            else {
+                let result = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: false)
+                self.commandDelegate!.send(result, callbackId: command.callbackId)
+                return
+        }
+        if reward_video == nil {
+            let adSize = getAdSize(opts)
+            reward_video = FBANRewardVideo(placementID: placementID)
+        }
+        reward_video!.show()
 
         let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: true)
         self.commandDelegate!.send(result, callbackId: command.callbackId)

@@ -1,4 +1,4 @@
-class FBANBanner: FBAdViewDelegate {
+class FBANBanner: FBANBase, FBAdViewDelegate {
 	var adView: FBAdView!
 	var adSize: FBAdSize!
 	var position: String!

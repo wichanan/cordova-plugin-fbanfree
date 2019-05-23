@@ -1,4 +1,4 @@
-class FBANInterstitial: FBRewardedVideoAdDelegate {
+class FBANRewardVideo: FBANBase, FBRewardedVideoAdDelegate {
 	var rewardedVideoAd: FBRewardedVideoAd!
 
     deinit {

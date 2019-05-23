@@ -1,4 +1,4 @@
-class FBANInterstitial: FBInterstitialAdDelegate {
+class FBANInterstitial: FBANBase, FBInterstitialAdDelegate {
 	var interstitialAd: FBInterstitialAd!
 
     deinit {
