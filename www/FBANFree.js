@@ -5,6 +5,10 @@ export function showBanner() {
     return exec('banner_show', [])
 }
 
-export function prepareInterstitial() {
-    return exec('interstitial_load')
+export function showInterstitial() {
+    return exec('interstitial_show')
+}
+
+export function showRewardedVideo() {
+    return exec('reward_video_show')
 }

@@ -70,6 +70,12 @@ class FBANPlugin: CDVPlugin {
         self.commandDelegate!.send(result, callbackId: command.callbackId)
     }
 
+    func emit(eventType: String, data: Any = false) {
+        let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: ["type": eventType, "data": data])
+        result?.setKeepCallbackAs(true)
+        self.commandDelegate!.send(result, callbackId: readyCallbackId)
+    }
+
     func getAdSize(_ opts: NSDictionary) -> FBAdSize {
         if let adSizeType = opts.value(forKey: "adSize") as? Int {
             switch adSizeType {
