@@ -36,10 +36,10 @@ class FBANBanner: FBANBase, FBAdViewDelegate {
     }
 
     func adViewWillLogImpression(_ adView: FBAdView) {
-        print("Banner ad impression is being captured")
+        plugin.emit(eventType: FBANEvents.bannerImpression)
     }
     
     func adView(_ adView: FBAdView, didFailWithError error: Error) {
-        print("Banner ad failed with error \(error)")
+        plugin.emit(eventType: FBANEvents.bannerLoadFail)
     }
 }

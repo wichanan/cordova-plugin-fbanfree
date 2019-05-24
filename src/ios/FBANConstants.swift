@@ -1,11 +1,7 @@
 struct FBANEvents {
     static let bannerClick = "fban.banner.click"
-    static let bannerClose = "fban.banner.close"
-    static let bannerExitApp = "fban.banner.exit_app"
     static let bannerImpression = "fban.banner.impression"
-    static let bannerLoad = "fban.banner.load"
     static let bannerLoadFail = "fban.banner.load_fail"
-    static let bannerOpen = "fban.banner.open"
     static let interstitialClick = "fban.interstitial.click"
     static let interstitialClose = "fban.interstitial.close"
     static let interstitialExitApp = "fban.interstitial.exit_app"
