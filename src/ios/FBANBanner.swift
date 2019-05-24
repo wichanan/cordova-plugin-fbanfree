@@ -32,13 +32,9 @@ class FBANBanner: FBANBase, FBAdViewDelegate {
     }
 
     func adViewDidClick(_ adView: FBAdView) {
-        print("Banner ad: click the adview")
+        plugin.emit(eventType: FBANEvents.bannerClick)
     }
-    
-    func adViewDidFinishHandlingClick(_ adView: FBAdView) {
-        print("Banner ad did finish click handling")
-    }
-    
+
     func adViewWillLogImpression(_ adView: FBAdView) {
         print("Banner ad impression is being captured")
     }
