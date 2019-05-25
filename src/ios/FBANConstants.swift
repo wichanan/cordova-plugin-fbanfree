@@ -19,4 +19,8 @@ struct FBANEvents {
     static let rewardVideoServerSuccess = "fban.reward_video.server_success"
     static let rewardVideoServerFail = "fban.reward_video.server_fail"
     static let rewardVideoWillClose = "fban.reward_video.will_close"
+    static let nativeClick = "fban.native.click"
+    static let nativeClickFinish = "fban.native.click_finish"
+    static let nativeImpression = "fban.native.impression"
+    ststic let nativeLoadFail = "fban.native.load_fail"
 }
