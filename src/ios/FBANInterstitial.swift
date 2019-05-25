@@ -19,22 +19,22 @@ class FBANInterstitial: FBANBase, FBInterstitialAdDelegate {
     }
 
     func interstitialAdDidClick(_ interstitialAd: FBInterstitialAd) {
-        print("Interstitial ad was clicked")
+        plugin.emit(eventType: FBANEvents.interstitialClick)
     }
     
     func interstitialAdWillLogImpression(_ interstitialAd: FBInterstitialAd) {
-        print("Interstitial ad logged impression")
+        plugin.emit(eventType: FBANEvents.interstitialImpression)
     }
     
     func interstitialAdDidClose(_ interstitialAd: FBInterstitialAd) {
-        print("Interstitial ad did close")
+        plugin.emit(eventType: FBANEvents.interstitialClose)
     }
     
     func interstitialAdWillClose(_ interstitialAd: FBInterstitialAd) {
-        print("The user clicked on the close button, the ad is just about to close")
+        plugin.emit(eventType: FBANEvents.interstitialWillClose)
     }
     
     func interstitialAd(_ interstitialAd: FBInterstitialAd, didFailWithError error: Error) {
-        print("Interstitial ad error with: \(error)")
+        plugin.emit(eventType: FBANEvents.interstitialLoadFail)
     }
 }

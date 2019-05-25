@@ -19,26 +19,34 @@ class FBANRewardVideo: FBANBase, FBRewardedVideoAdDelegate {
     }
 
     func rewardedVideoAdDidClick(_ rewardedVideoAd: FBRewardedVideoAd) {
-        print("Video ad clicked")
+        plugin.emit(eventType: FBANEvents.rewardVideoClick)
     }
     
     func rewardedVideoAdDidClose(_ rewardedVideoAd: FBRewardedVideoAd) {
-        print("Rewarded Video ad closed - this can be triggered by closing the application, or closing the video end card")
+        plugin.emit(eventType: FBANEvents.rewardVideoClose)
     }
     
     func rewardedVideoAdVideoComplete(_ rewardedVideoAd: FBRewardedVideoAd) {
-        print("Rewarded Video ad video complete - this is called after a full video view, before the ad end card is shown. You can use this event to initialize your reward")
+        plugin.emit(eventType: FBANEvents.rewardVideoComplete)
     }
     
     func rewardedVideoAdWillClose(_ rewardedVideoAd: FBRewardedVideoAd) {
-        print("The user clicked on the close button, the ad is just about to close")
+        plugin.emit(eventType: FBANEvents.rewardVideoWillClose)
     }
     
     func rewardedVideoAdWillLogImpression(_ rewardedVideoAd: FBRewardedVideoAd) {
-        print("Rewared video logged impression")
+        plugin.emit(eventType: FBANEvents.rewardVideoImpression)
     }
     
     func rewardedVideoAd(_ rewardedVideoAd: FBRewardedVideoAd, didFailWithError error: Error) {
-        print("Rewarded video ad failed to load with error: \(error)")
+        plugin.emit(eventType: FBANEvents.rewardVideoLoadFail)
+    }
+
+    func rewardedVideoAdServerRewardDidFail(_ rewardedVideoAd: FBRewardedVideoAd) {
+        plugin.emit(eventType: FBANEvents.rewardVideoServerFail)
+    }
+
+    func rewardedVideoAdServerRewardDidSucceed(_ rewardedVideoAd: FBRewardedVideoAd) {
+        plugin.emit(eventType: FBANEvents.rewardVideoServerSuccess)
     }
 }
