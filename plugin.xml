@@ -42,9 +42,11 @@
 	<platform name="android">
 		<preference name="ANDROID_SUPPORT_RECYCLERVIEW_VERSION" default="27+" />
 		<config-file parent="/*" target="res/xml/config.xml">
-			<feature name="FBAN"><param name="android-package" value="fban.plugin.FBAN" /></feature>
+			<feature name="FBAN">
+				<param name="android-package" value="fban.plugin.FBAN" />
+			</feature>
 		</config-file>
-		<config-file parent="/*" target="AndroidManifest.xml">
+		<config-file target="AndroidManifest.xml" parent="/manifest/application">
 			<meta-data
                 android:hardwareAccelerated="true" />
 		</config-file>

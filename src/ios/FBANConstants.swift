@@ -12,7 +12,6 @@ struct FBANEvents {
     static let rewardVideoClick = "fban.reward_video.click"
     static let rewardVideoClose = "fban.reward_video.close"
     static let rewardVideoComplete = "fban.reward_video.complete"
-    static let rewardVideoExitApp = "fban.reward_video.exit_app"
     static let rewardVideoImpression = "fban.reward_video.impression"
     static let rewardVideoLoad = "fban.reward_video.load"
     static let rewardVideoLoadFail = "fban.reward_video.load_fail"

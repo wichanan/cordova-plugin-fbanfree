@@ -33,12 +33,12 @@ class FBANNative: FBNativeAdDelegate{
         if (self.nativeAd != nil && self.nativeAd!.isAdValid) {
             let adView = FBNativeAdView(nativeAd: self.nativeAd!, with: self.adViewType)
             
-            self.view.addSubview(adView)
+            plugin.viewController.view.addSubview(adView)
+            let adSize = self.adView.bounds.size
             
-            let size: CGSize = self.view.bounds.size
-            let xOffset: CGFloat = size.width / 2 - 160
-            let yOffset: CGFloat = (size.height > size.width) ? 100 : 20
-            adView.frame = CGRect(x: xOffset, y: yOffset, width: 320, height: 300)
+            let size: CGSize = plugin.viewController.view.bounds.size
+            let xOffset: CGFloat = (size.width / 2) - (adSize.width / 2)
+            adView.frame = CGRect(x: xOffset, y: 0, width: size.width, height: adSize.height)
         }
     }
 
