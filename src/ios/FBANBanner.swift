@@ -40,6 +40,6 @@ class FBANBanner: FBANBase, FBAdViewDelegate {
     }
     
     func adView(_ adView: FBAdView, didFailWithError error: Error) {
-        plugin.emit(eventType: FBANEvents.bannerLoadFail)
+        plugin.emit(eventType: FBANEvents.bannerLoadFail, data: error)
     }
 }

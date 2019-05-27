@@ -43,18 +43,18 @@ class FBANNative: FBNativeAdDelegate{
     }
 
     func nativeAdDidClick(_ nativeAd: FBNativeAd) {
-        print("Native ad clicked")
+        plugin.emit(eventType: FBANEvents.nativeClick)
     }
     
     func nativeAdDidFinishHandlingClick(_ nativeAd: FBNativeAd) {
-        print("Native ad finished click handling")
+        plugin.emit(eventType: FBANEvents.nativeClickFinish)
     }
     
     func nativeAdWillLogImpression(_ nativeAd: FBNativeAd) {
-        print("Native ad impression is being captured.")
+        plugin.emit(eventType: FBANEvents.nativeImpression)
     }
     
     func nativeAd(_ nativeAd: FBNativeAd, didFailWithError error: Error) {
-        print("Error showing Native ad \(error)")
+        plugin.emit(eventType: FBANEvents.nativeLoadFail, data: error)
     }
 }

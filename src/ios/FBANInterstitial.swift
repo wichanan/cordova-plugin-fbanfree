@@ -35,6 +35,6 @@ class FBANInterstitial: FBANBase, FBInterstitialAdDelegate {
     }
     
     func interstitialAd(_ interstitialAd: FBInterstitialAd, didFailWithError error: Error) {
-        plugin.emit(eventType: FBANEvents.interstitialLoadFail)
+        plugin.emit(eventType: FBANEvents.interstitialLoadFail, data: error)
     }
 }

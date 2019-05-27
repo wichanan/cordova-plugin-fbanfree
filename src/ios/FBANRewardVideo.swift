@@ -39,7 +39,7 @@ class FBANRewardVideo: FBANBase, FBRewardedVideoAdDelegate {
     }
     
     func rewardedVideoAd(_ rewardedVideoAd: FBRewardedVideoAd, didFailWithError error: Error) {
-        plugin.emit(eventType: FBANEvents.rewardVideoLoadFail)
+        plugin.emit(eventType: FBANEvents.rewardVideoLoadFail, data: error)
     }
 
     func rewardedVideoAdServerRewardDidFail(_ rewardedVideoAd: FBRewardedVideoAd) {
