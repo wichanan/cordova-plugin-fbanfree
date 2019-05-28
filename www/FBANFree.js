@@ -12,3 +12,7 @@ export function showInterstitial() {
 export function showRewardedVideo() {
     return exec('reward_video_show')
 }
+
+export function showNative() {
+    return exec('native_show')
+}
