@@ -1,6 +1,6 @@
 @objc(FBANPlugin)
 class FBANPlugin: CDVPlugin {
-    @static let testAdID = ""
+    static let testAdID = ""
 
     override func pluginInitialize() {
         super.pluginInitialize()
@@ -20,9 +20,9 @@ class FBANPlugin: CDVPlugin {
         }
         if banner == nil {
             let adSize = getAdSize(opts)
-            banner = FBANBanner(placementID: placementID, adSize: adSize, position: position)
+            banner = FBANBanner(id: id, placementID: placementID, adSize: adSize, position: position)
         }
-        banner!.show_banner()
+        banner!.showBanner()
 
         let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: true)
         self.commandDelegate!.send(result, callbackId: command.callbackId)
@@ -40,8 +40,7 @@ class FBANPlugin: CDVPlugin {
                 return
         }
         if interstitial == nil {
-            let adSize = getAdSize(opts)
-            interstitial = FBANInterstitial(placementID: placementID)
+            interstitial = FBANInterstitial(id: id, placementID: placementID)
         }
         interstitial!.show()
 
@@ -61,8 +60,7 @@ class FBANPlugin: CDVPlugin {
                 return
         }
         if reward_video == nil {
-            let adSize = getAdSize(opts)
-            reward_video = FBANRewardVideo(placementID: placementID)
+            reward_video = FBANRewardVideo(id: id, placementID: placementID)
         }
         reward_video!.show()
 

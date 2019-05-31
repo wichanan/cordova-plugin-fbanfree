@@ -3,26 +3,22 @@ class FBANBase: NSObject {
     static weak var plugin: FBANPlugin!
 
     var placementID: String!
+    var id: Int!
 
     var plugin: FBANPlugin {
         return FBANBase.plugin
     }
 
-    init(placementID: String) {
+    init(id: Int, placementID: String) {
         super.init()
         
+        self.id = id
         self.placementID = placementID
-        FBANBase.ads[placementID] = self
+        FBANBase.ads[id] = self
     }
 
     deinit {
         FBANBase.ads.removeValue(forKey: self.id)
-        self.adUnitID = nil
+        self.placementID = nil
     }
-
-    //func fitAds() {
-        //for (_, ad) in FBANBase.ads {
-            // tba
-        //}
-    //}
 }

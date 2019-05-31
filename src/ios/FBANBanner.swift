@@ -3,8 +3,8 @@ class FBANBanner: FBANBase, FBAdViewDelegate {
 	var adSize: FBAdSize!
 	var position: String!
 
-	init(placementID: String, adSize: FBAdSize, position: String) {
-        super.init(placementID: placementID)
+	init(id: Int, placementID: String, adSize: FBAdSize, position: String) {
+        super.init(id: id, placementID: placementID)
 
         self.adSize = adSize
         self.position = position
@@ -18,7 +18,7 @@ class FBANBanner: FBANBase, FBAdViewDelegate {
     func prepareBanner() {
         self.adView = FBAdView(placementID: self.placementID, adSize: self.adSize, rootViewController: plugin.viewController)
         let adHeight = self.adView.bounds.size.height
-        let size: CGSize = plugin.viewController.bounds.size
+        let size: CGSize = plugin.viewController.view.bounds.size
         let yOffset: CGFloat = size.height - adHeight
         self.adView?.frame = CGRect(x: 0, y: yOffset, width: size.width, height: adHeight)
         self.adView?.delegate = self

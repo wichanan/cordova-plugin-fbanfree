@@ -33,8 +33,9 @@
 		<source-file src="src/ios/FBANBanner.swift" />
 		<source-file src="src/ios/FBANPlugin.swift" />
 		<source-file src="src/ios/FBANInterstitial.swift" />
-		<source-file src="src/ios/FBANrewardVideo.swift" />
+		<source-file src="src/ios/FBANRewardVideo.swift" />
 		<source-file src="src/ios/FBANConstants.swift" />
+		<source-file src="src/ios/FBANNative.swift" />
 
 		<dependency id="cordova-plugin-add-swift-support" version="^2.0.2"/>
 		<pod name="FBAudienceNetwork" spec="~> 5.3.1" />
