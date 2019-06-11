@@ -1,4 +1,4 @@
-class FBANNative: FBNativeAdDelegate{
+class FBANNative: FBANBase, FBNativeAdDelegate{
     var nativeAd: FBNativeAd!
     var adViewType: FBNativeAdViewType!
     var position: String!
@@ -7,8 +7,8 @@ class FBANNative: FBNativeAdDelegate{
         return self.plugin.viewController.view
     }
 
-    init(placementID: String, adViewType: FBNativeAdViewType, position: String) {
-        super.init(placementID: placementID)
+    init(id: Int, placementID: String, adViewType: FBNativeAdViewType, position: String) {
+        super.init(id: id, placementID: placementID)
 
         self.adViewType = adViewType
         self.position = position
@@ -18,7 +18,7 @@ class FBANNative: FBNativeAdDelegate{
         nativeAd = nil
     }
 
-    func show(request: GADRequest) {
+    func show() {
         let nativeAd = FBNativeAd(placementID: placementID)
         nativeAd.delegate = self
         nativeAd.loadAd()
@@ -34,7 +34,7 @@ class FBANNative: FBNativeAdDelegate{
             let adView = FBNativeAdView(nativeAd: self.nativeAd!, with: self.adViewType)
             
             plugin.viewController.view.addSubview(adView)
-            let adSize = self.adView.bounds.size
+            let adSize = adView.bounds.size
             
             let size: CGSize = plugin.viewController.view.bounds.size
             let xOffset: CGFloat = (size.width / 2) - (adSize.width / 2)

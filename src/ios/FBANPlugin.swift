@@ -1,9 +1,21 @@
 @objc(FBANPlugin)
 class FBANPlugin: CDVPlugin {
     static let testAdID = ""
+    
+    var readyCallbackId: String!
 
     override func pluginInitialize() {
         super.pluginInitialize()
+    }
+    
+    @objc(ready:)
+    func ready(command: CDVInvokedUrlCommand) {
+        readyCallbackId = command.callbackId
+        
+        self.emit(eventType: FBANEvents.ready, data: [
+            "platform": "ios",
+            "sdkVersion": FB_AD_SDK_VERSION,
+            "isRunningInTestLab": false])
     }
 
     @objc(banner_show:)

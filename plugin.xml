@@ -19,6 +19,7 @@
         <engine name="cordova" version=">=7.0.0" />
         <engine name="cordova-android" version=">=6.0.0" />
     </engines>
+    
 	<dependency id="cordova-plugin-cocoapod-support"/>
 	<platform name="ios">
 		<pods-config ios-min-version="9.0" />
@@ -29,6 +30,7 @@
 		</config-file>
 
 		<header-file src="src/ios/FBANFree-Bridging-Header.h" />
+
 		<source-file src="src/ios/FBANBase.swift" />
 		<source-file src="src/ios/FBANBanner.swift" />
 		<source-file src="src/ios/FBANPlugin.swift" />
