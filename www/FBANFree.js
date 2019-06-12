@@ -1,8 +1,32 @@
 // import exec from 'cordova/exec'
-import { exec, getAdUnitId } from './driver'
+// import { exec, getAdUnitId } from './driver'
+var exec = require('cordova/exec')
 
-export function showBanner() {
-    return exec('banner_show', {
+
+/**
+ * @ignore
+ */
+function execute(method, args) {
+    console.log('i am in execution', method, args)
+    // new Promise((resolve, reject) => {
+        exec(resolve, reject, 'FBANFree', method, args)
+    // })
+}
+
+var nextId = 100
+var adUnits = {}
+
+function getAdUnitId(adUnitId) {
+    if (adUnits[adUnitId]) {
+      return adUnits[adUnitId]
+    }
+    adUnits[adUnitId] = nextId
+    nextId += 1
+    return adUnits[adUnitId]
+}
+
+exports.showBanner = function () {
+    execute('banner_show', {
         placementID: 'IMG_16_9_APP_INSTALL#1345786662228899_1352655241542041',
         adSize: 1,
         position: 'bottom',
@@ -10,14 +34,14 @@ export function showBanner() {
     })
 }
 
-export function showInterstitial() {
+exports.showInterstitial = function () {
     return exec('interstitial_show')
 }
 
-export function showRewardedVideo() {
+exports.showRewardedVideo = function() {
     return exec('reward_video_show')
 }
 
-export function showNative() {
+exports.showNative = function() {
     return exec('native_show')
 }
