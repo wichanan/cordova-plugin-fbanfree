@@ -20,6 +20,7 @@ class FBANPlugin: CDVPlugin {
 
     @objc(banner_show:)
     func banner_show(command: CDVInvokedUrlCommand) {
+        print("trying to show the banner in native file")
         guard let opts = command.argument(at: 0) as? NSDictionary,
             let id = opts.value(forKey: "id") as? Int,
             let placementID = opts.value(forKey: "placementID") as? String,

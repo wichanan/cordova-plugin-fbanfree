@@ -25,8 +25,12 @@ function getAdUnitId(adUnitId) {
     return adUnits[adUnitId]
 }
 
-exports.showBanner = function () {
-    execute('banner_show', {
+exports.showBanner = function (sucess, error) {
+    exec(
+        sucess,
+        error,
+        "FBANFree",
+        'banner_show', {
         placementID: 'IMG_16_9_APP_INSTALL#1345786662228899_1352655241542041',
         adSize: 1,
         position: 'bottom',

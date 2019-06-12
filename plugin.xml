@@ -23,13 +23,14 @@
 	<dependency id="cordova-plugin-cocoapod-support"/>
 	<platform name="ios">
 		<pods-config ios-min-version="9.0" />
+
 		<config-file parent="/*" target="config.xml">
-			<feature name="FBAN">
+			<feature name="FBANFree">
 				<param name="ios-package" value="FBANPlugin" />
 			</feature>
 		</config-file>
 
-		<header-file src="src/ios/FBANFree-Bridging-Header.h" />
+		<header-file src="src/ios/FBANPlugin-Bridging-Header.h" />
 
 		<source-file src="src/ios/FBANBase.swift" />
 		<source-file src="src/ios/FBANBanner.swift" />
