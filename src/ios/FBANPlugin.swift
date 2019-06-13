@@ -6,6 +6,8 @@ class FBANPlugin: CDVPlugin {
 
     override func pluginInitialize() {
         super.pluginInitialize()
+        
+        FBANBase.plugin = self
     }
     
     @objc(ready:)
@@ -20,7 +22,6 @@ class FBANPlugin: CDVPlugin {
 
     @objc(banner_show:)
     func banner_show(command: CDVInvokedUrlCommand) {
-        print("trying to show the banner in native file")
         guard let opts = command.argument(at: 0) as? NSDictionary,
             let id = opts.value(forKey: "id") as? Int,
             let placementID = opts.value(forKey: "placementID") as? String,
@@ -35,6 +36,7 @@ class FBANPlugin: CDVPlugin {
             let adSize = getAdSize(opts)
             banner = FBANBanner(id: id, placementID: placementID, adSize: adSize, position: position)
         }
+        
         banner!.showBanner()
 
         let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: true)

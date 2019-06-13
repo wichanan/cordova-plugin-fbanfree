@@ -7,9 +7,8 @@ var exec = require('cordova/exec')
  * @ignore
  */
 function execute(method, args) {
-    console.log('i am in execution', method, args)
     return new Promise((resolve, reject) => {
-        exec(resolve, reject, 'FBANFree', method, [args]);
+        exec(resolve, reject, 'FBANFree', method, [args])
     })
 }
 
@@ -25,7 +24,13 @@ function getAdUnitId(adUnitId) {
     return adUnits[adUnitId]
 }
 
-exports.showBanner = function () {
+exports.showBanner = function() {
+    // exec(success, fail, 'FBANFree', 'banner_show', [{
+    //     placementID: 'IMG_16_9_APP_INSTALL#1345786662228899_1352655241542041',
+    //     adSize: 1,
+    //     position: 'bottom',
+    //     id: getAdUnitId('IMG_16_9_APP_INSTALL#1345786662228899_1352655241542041')
+    // }]);
     return execute(
         'banner_show', {
         placementID: 'IMG_16_9_APP_INSTALL#1345786662228899_1352655241542041',
@@ -35,7 +40,7 @@ exports.showBanner = function () {
     });
 }
 
-exports.showInterstitial = function () {
+exports.showInterstitial = function() {
     return exec('interstitial_show')
 }
 
