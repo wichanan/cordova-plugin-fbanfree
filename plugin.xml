@@ -24,7 +24,7 @@
 	<platform name="ios">
 		<pods-config ios-min-version="9.0" />
 
-		<config-file parent="/*" target="config.xml">
+		<config-file target="config.xml" parent="/*" >
 			<feature name="FBANFree">
 				<param name="ios-package" value="FBANPlugin" />
 			</feature>
