@@ -38,7 +38,7 @@ class FBANPlugin: CDVPlugin {
         }
         
         banner!.showBanner()
-        print("banner callback id " + command.callbackId)
+        
         let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: true)
         self.commandDelegate!.send(result, callbackId: command.callbackId)
     }
