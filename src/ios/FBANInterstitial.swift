@@ -1,12 +1,12 @@
 class FBANInterstitial: FBANBase, FBInterstitialAdDelegate {
-	var interstitialAd: FBInterstitialAd!
+    var interstitialAd: FBInterstitialAd!
 
     deinit {
-    	interstitialAd = nil
+        interstitialAd = nil
     }
 
     func show() {
-        self.interstitialAd = FBInterstitialAd(placementID: placementID)
+        self.interstitialAd = FBInterstitialAd(placementID: self.placementID)
         self.interstitialAd!.delegate = self
         self.interstitialAd!.load()
     }
@@ -35,6 +35,7 @@ class FBANInterstitial: FBANBase, FBInterstitialAdDelegate {
     }
     
     func interstitialAd(_ interstitialAd: FBInterstitialAd, didFailWithError error: Error) {
+        print("Error showing interstitial ad with: " + error.localizedDescription)
         plugin.emit(eventType: FBANEvents.interstitialLoadFail, data: error)
     }
 }
