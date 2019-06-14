@@ -41,13 +41,16 @@ exports.showBanner = function() {
 }
 
 exports.showInterstitial = function() {
-    return exec('interstitial_show')
+    return execute('interstitial_show')
 }
 
 exports.showRewardedVideo = function() {
-    return exec('reward_video_show')
+    return execute('reward_video_show')
 }
 
 exports.showNative = function() {
-    return exec('native_show')
+    return execute('native_show', {
+        placementID: 'VID_HD_16_9_46S_APP_INSTALL#1345786662228899_1352651668209065',
+        id: getAdUnitId('VID_HD_16_9_46S_APP_INSTALL#1345786662228899_1352651668209065')
+    })
 }
