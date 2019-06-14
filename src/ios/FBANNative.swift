@@ -32,7 +32,6 @@ class FBANNative: FBANBase, FBNativeAdDelegate{
             let adView = FBNativeAdView(nativeAd: self.nativeAd!, with: self.adViewType)
             
             plugin.viewController.view.addSubview(adView)
-            let adSize = adView.bounds.size
             
             let size: CGSize = plugin.viewController.view.bounds.size
             let yOffset: CGFloat = (size.height / 2) - 210
