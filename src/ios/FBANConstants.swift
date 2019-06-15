@@ -22,4 +22,8 @@ struct FBANEvents {
     static let nativeClickFinish = "fban.native.click_finish"
     static let nativeImpression = "fban.native.impression"
     static let nativeLoadFail = "fban.native.load_fail"
+    static let nativeBannerClick = "fban.native_banner.click"
+    static let nativeBannerClickFinish = "fban.native_banner.click_finish"
+    static let nativeBannerImpression = "fban.native_banner.impression"
+    static let nativeBannerLoadFail = "fban.native_banner.load_fail"
 }

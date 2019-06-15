@@ -44,16 +44,26 @@ exports.showInterstitial = function() {
     return execute('interstitial_show', {
         placementID: 'VID_HD_16_9_46S_APP_INSTALL#1345786662228899_1352651671542398',
         id: getAdUnitId('VID_HD_16_9_46S_APP_INSTALL#1345786662228899_1352651671542398')
-    })
+    });
 }
 
 exports.showRewardedVideo = function() {
-    return execute('reward_video_show')
+    return execute('reward_video_show', {
+        placementID: 'VID_HD_16_9_46S_APP_INSTALL#1345786662228899_1352651671542398',
+        id: getAdUnitId('VID_HD_16_9_46S_APP_INSTALL#1345786662228899_1352651671542398')
+    });
 }
 
 exports.showNative = function() {
     return execute('native_show', {
         placementID: 'VID_HD_16_9_46S_APP_INSTALL#1345786662228899_1352651668209065',
         id: getAdUnitId('VID_HD_16_9_46S_APP_INSTALL#1345786662228899_1352651668209065')
-    })
+    });
+}
+
+exports.showNativeBanner = function() {
+    return execute('native_banner_show', {
+        placementID: 'IMG_16_9_APP_INSTALL#1345786662228899_1352651668209065',
+        id: getAdUnitId: 'IMG_16_9_APP_INSTALL#1345786662228899_1352651668209065'
+    });
 }

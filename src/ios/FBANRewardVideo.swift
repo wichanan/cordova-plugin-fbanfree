@@ -47,6 +47,7 @@ class FBANRewardVideo: FBANBase, FBRewardedVideoAdDelegate {
     }
 
     func rewardedVideoAdServerRewardDidSucceed(_ rewardedVideoAd: FBRewardedVideoAd) {
+        print("Error showing interstitial ad with: " + error.localizedDescription)
         plugin.emit(eventType: FBANEvents.rewardVideoServerSuccess)
     }
 }
