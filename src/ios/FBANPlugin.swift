@@ -64,6 +64,28 @@ class FBANPlugin: CDVPlugin {
         let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: true)
         self.commandDelegate!.send(result, callbackId: command.callbackId)
     }
+    
+    @objc(native_banner_show:)
+    func native_banner_show(command: CDVInvokedUrlCommand) {
+        guard let opts = command.argument(at: 0) as? NSDictionary,
+            let id = opts.value(forKey: "id") as? Int,
+            let placementID = opts.value(forKey: "placementID") as? String,
+            var native_banner = FBANBase.ads[id] as? FBANNativeBanner?
+            else {
+                let result = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: false)
+                self.commandDelegate!.send(result, callbackId: command.callbackId)
+                return
+        }
+        
+        if native_banner == nil {
+            native_banner = FBANNativeBanner(id: id, placementID: placementID, position: [:], adviewType: FBNativeBannerAdViewType.genericHeight50.rawValue)
+        }
+        
+        native_banner!.show()
+        
+        let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: true)
+        self.commandDelegate!.send(result, callbackId: command.callbackId)
+    }
 
     @objc(interstitial_show:)
     func interstitial_show(command: CDVInvokedUrlCommand) {

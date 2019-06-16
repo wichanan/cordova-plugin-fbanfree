@@ -1,8 +1,8 @@
 class FBANRewardVideo: FBANBase, FBRewardedVideoAdDelegate {
-	var rewardedVideoAd: FBRewardedVideoAd!
+    var rewardedVideoAd: FBRewardedVideoAd!
 
     deinit {
-    	rewardedVideoAd = nil
+        rewardedVideoAd = nil
     }
 
     func show() {
@@ -39,6 +39,7 @@ class FBANRewardVideo: FBANBase, FBRewardedVideoAdDelegate {
     }
     
     func rewardedVideoAd(_ rewardedVideoAd: FBRewardedVideoAd, didFailWithError error: Error) {
+        print("Error showing interstitial ad with: " + error.localizedDescription)
         plugin.emit(eventType: FBANEvents.rewardVideoLoadFail, data: error)
     }
 
@@ -47,7 +48,6 @@ class FBANRewardVideo: FBANBase, FBRewardedVideoAdDelegate {
     }
 
     func rewardedVideoAdServerRewardDidSucceed(_ rewardedVideoAd: FBRewardedVideoAd) {
-        print("Error showing interstitial ad with: " + error.localizedDescription)
         plugin.emit(eventType: FBANEvents.rewardVideoServerSuccess)
     }
 }

@@ -64,6 +64,6 @@ exports.showNative = function() {
 exports.showNativeBanner = function() {
     return execute('native_banner_show', {
         placementID: 'IMG_16_9_APP_INSTALL#1345786662228899_1352651668209065',
-        id: getAdUnitId: 'IMG_16_9_APP_INSTALL#1345786662228899_1352651668209065'
+        id: getAdUnitId('IMG_16_9_APP_INSTALL#1345786662228899_1352651668209065')
     });
 }
