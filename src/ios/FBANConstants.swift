@@ -26,4 +26,9 @@ struct FBANEvents {
     static let nativeBannerClickFinish = "fban.native_banner.click_finish"
     static let nativeBannerImpression = "fban.native_banner.impression"
     static let nativeBannerLoadFail = "fban.native_banner.load_fail"
+    static let bannerAdTestType = "IMG_16_9_APP_INSTALL#"
+    static let interstitialAdTestType = "VID_HD_16_9_46S_APP_INSTALL#"
+    static let rewardVideoAdTestType = "VID_HD_16_9_46S_APP_INSTALL#"
+    static let nativeAdTestType = "VID_HD_16_9_46S_APP_INSTALL#"
+    static let nativeBannerAdTestType = "IMG_16_9_APP_INSTALL#"
 }
