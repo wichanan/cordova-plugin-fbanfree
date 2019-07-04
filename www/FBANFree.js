@@ -83,30 +83,30 @@ function adConfig(placementID) {
     }
 }
 
-exports.showBanner = function() {
+exports.showBanner = function(placementID) {
     return execute('banner_show', bannerConfig('1345786662228899_1352655241542041'));
 }
 
-exports.hideBanner = function() {
+exports.hideBanner = function(placementID) {
     return execute('banner_hide', {id: getAdUnitId('1345786662228899_1352655241542041')})
 }
 
-exports.showInterstitial = function() {
+exports.showInterstitial = function(placementID) {
     return execute('interstitial_show', adConfig('1345786662228899_1352651671542398'));
 }
 
-exports.showRewardedVideo = function() {
+exports.showRewardedVideo = function(placementID) {
     return execute('reward_video_show', adConfig(''));
 }
 
-exports.showNative = function() {
+exports.showNative = function(placementID) {
     return execute('native_show', adConfig('1345786662228899_1352641741543391'));
 }
 
-exports.hideNative = function() {
+exports.hideNative = function(placementID) {
     return execute('native_hide', {id: getAdUnitId('1345786662228899_1352641741543391')})
 }
 
-exports.showNativeBanner = function() {
+exports.showNativeBanner = function(placementID) {
     return execute('native_banner_show', adConfig('1345786662228899_1352651668209065'));
 }
