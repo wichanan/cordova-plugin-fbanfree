@@ -5,9 +5,9 @@ import android.util.SparseArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import fban.plugin.FBANFree
+import fban.plugin.FBANFree;
 
-public abstract Class AdBase {
+public abstract class AdBase {
     protected static FBANFree plugin;
 
     final int id;

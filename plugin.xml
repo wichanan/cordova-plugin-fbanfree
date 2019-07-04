@@ -53,7 +53,8 @@
 		</config-file>
 		<config-file target="AndroidManifest.xml" parent="/manifest/application">
 			<meta-data
-                android:hardwareAccelerated="true" />
+                android:name="com.facebook.android.ads.fban"
+                android:value="fban" />
 		</config-file>
 
 		<framework src="com.android.support:recyclerview-v7:$ANDROID_SUPPORT_RECYCLERVIEW_VERSION" />
