@@ -4,10 +4,11 @@ class FBANPlugin: CDVPlugin {
     var isTestMode = true
     
     var readyCallbackId: String!
-
+    
     override func pluginInitialize() {
         super.pluginInitialize()
-        isTestMode = false
+        
+        isTestMode = true
         FBANBase.plugin = self
     }
     
@@ -20,7 +21,7 @@ class FBANPlugin: CDVPlugin {
             "sdkVersion": FB_AD_SDK_VERSION,
             "isRunningInTestLab": false])
     }
-
+    
     @objc(banner_show:)
     func banner_show(command: CDVInvokedUrlCommand) {
         guard let opts = command.argument(at: 0) as? NSDictionary,
@@ -89,6 +90,22 @@ class FBANPlugin: CDVPlugin {
         self.commandDelegate!.send(result, callbackId: command.callbackId)
     }
     
+    @objc(native_hide:)
+    func native_hide(command: CDVInvokedUrlCommand) {
+        guard let opts = command.argument(at: 0) as? NSDictionary,
+            let id = opts.value(forKey: "id") as? Int,
+            let native = FBANBase.ads[id] as? FBANNative?
+            else {
+                let result = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: false)
+                self.commandDelegate!.send(result, callbackId: command.callbackId)
+                return
+        }
+        native!.hide()
+        
+        let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: true)
+        self.commandDelegate!.send(result, callbackId: command.callbackId)
+    }
+    
     @objc(native_banner_show:)
     func native_banner_show(command: CDVInvokedUrlCommand) {
         guard let opts = command.argument(at: 0) as? NSDictionary,
@@ -96,24 +113,26 @@ class FBANPlugin: CDVPlugin {
             var placementID = opts.value(forKey: "placementID") as? String,
             var native_banner = FBANBase.ads[id] as? FBANNativeBanner?
             else {
+                print("failed with nothing")
                 let result = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: false)
                 self.commandDelegate!.send(result, callbackId: command.callbackId)
                 return
         }
-        
+        print("trying to show the native banner444 324234f")
         if native_banner == nil {
             if (isTestMode == true) {
                 placementID = FBANEvents.nativeBannerAdTestType + placementID
             }
+            print("trying to show the native banner444 11111f")
             native_banner = FBANNativeBanner(id: id, placementID: placementID, position: [:], adviewType: FBNativeBannerAdViewType.genericHeight50.rawValue)
         }
-        
+
         native_banner!.show()
-        
+
         let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: true)
         self.commandDelegate!.send(result, callbackId: command.callbackId)
     }
-
+    
     @objc(interstitial_show:)
     func interstitial_show(command: CDVInvokedUrlCommand) {
         guard let opts = command.argument(at: 0) as? NSDictionary,
@@ -132,11 +151,11 @@ class FBANPlugin: CDVPlugin {
             interstitial = FBANInterstitial(id: id, placementID: placementID)
         }
         interstitial!.show()
-
+        
         let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: true)
         self.commandDelegate!.send(result, callbackId: command.callbackId)
     }
-
+    
     @objc(reward_video_show:)
     func reward_video_show(command: CDVInvokedUrlCommand) {
         guard let opts = command.argument(at: 0) as? NSDictionary,
@@ -155,17 +174,17 @@ class FBANPlugin: CDVPlugin {
             reward_video = FBANRewardVideo(id: id, placementID: placementID)
         }
         reward_video!.show()
-
+        
         let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: true)
         self.commandDelegate!.send(result, callbackId: command.callbackId)
     }
-
+    
     func emit(eventType: String, data: Any = false) {
         let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: ["type": eventType, "data": data])
         result?.setKeepCallbackAs(true)
         self.commandDelegate!.send(result, callbackId: readyCallbackId)
     }
-
+    
     func getAdSize(_ opts: NSDictionary) -> FBAdSize {
         if let adSizeType = opts.value(forKey: "adSize") as? Int {
             switch adSizeType {

@@ -100,9 +100,13 @@ exports.showRewardedVideo = function() {
 }
 
 exports.showNative = function() {
-    return execute('native_show', adConfig('1345786662228899_1352651668209065'));
+    return execute('native_show', adConfig('1345786662228899_1352641741543391'));
+}
+
+exports.hideNative = function() {
+    return execute('native_hide', {id: getAdUnitId('1345786662228899_1352641741543391')})
 }
 
 exports.showNativeBanner = function() {
-    return execute('native_banner_show', bannerConfig('1345786662228899_1352651668209065'));
+    return execute('native_banner_show', adConfig('1345786662228899_1352651668209065'));
 }

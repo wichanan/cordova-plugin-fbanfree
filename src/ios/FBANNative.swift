@@ -1,5 +1,6 @@
 class FBANNative: FBANBase, FBNativeAdDelegate{
     var nativeAd: FBNativeAd!
+    var nativeAdView: FBNativeAdView!
     var adViewType: FBNativeAdViewType!
     var position: String!
 
@@ -20,7 +21,15 @@ class FBANNative: FBANBase, FBNativeAdDelegate{
     func show() {
         self.nativeAd = FBNativeAd(placementID: placementID)
         self.nativeAd?.delegate = self
-        self.nativeAd?.loadAd()
+        self.nativeAd?.loadAd(withMediaCachePolicy: FBNativeAdsCachePolicy.all)
+    }
+    
+    func hide() {
+        if (self.nativeAdView?.superview != nil) {
+            self.nativeAd.delegate = nil
+            self.nativeAdView.rootViewController = nil
+            self.nativeAdView.removeFromSuperview()
+        }
     }
 
     func nativeAdDidLoad(_ nativeAd: FBNativeAd) {
@@ -29,13 +38,13 @@ class FBANNative: FBANBase, FBNativeAdDelegate{
 
     func showNativeAd() {
         if (self.nativeAd != nil && self.nativeAd!.isAdValid) {
-            let adView = FBNativeAdView(nativeAd: self.nativeAd!, with: self.adViewType)
+            self.nativeAdView = FBNativeAdView(nativeAd: self.nativeAd!, with: self.adViewType)
             
-            plugin.viewController.view.addSubview(adView)
+            plugin.viewController.view.addSubview(self.nativeAdView)
             
             let size: CGSize = plugin.viewController.view.bounds.size
             let yOffset: CGFloat = (size.height / 2) - 210
-            adView.frame = CGRect(x: 0, y: yOffset, width: size.width, height: 420)
+            self.nativeAdView.frame = CGRect(x: 0, y: yOffset, width: size.width, height: 420)
         }
     }
 

@@ -6,7 +6,7 @@ class FBANBanner: FBANBase, FBAdViewDelegate {
     var view: UIView {
         return self.plugin.viewController.view
     }
-
+    
     init(id: Int, placementID: String, adSize: FBAdSize, position: String) {
         super.init(id: id, placementID: placementID)
         
@@ -14,11 +14,11 @@ class FBANBanner: FBANBase, FBAdViewDelegate {
         self.position = position
         self.prepareBanner()
     }
-
+    
     deinit {
         adView = nil
     }
-
+    
     func prepareBanner() {
         self.adView = FBAdView(placementID: self.placementID, adSize: self.adSize, rootViewController: plugin.viewController)
         let size: CGSize = view.bounds.size
@@ -29,7 +29,7 @@ class FBANBanner: FBANBase, FBAdViewDelegate {
     }
     
     func hide() {
-        if (adView?.superview) != nil {
+        if (adView?.superview != nil) {
             adView.delegate = nil
             adView.removeFromSuperview()
             plugin.webView.frame = CGRect(
@@ -39,19 +39,19 @@ class FBANBanner: FBANBase, FBAdViewDelegate {
                 height: plugin.webView.bounds.height + 50)
         }
     }
-
+    
     func showBanner() {
         self.adView?.loadAd()
     }
-
+    
     func adViewDidLoad(_ adView: FBAdView) {
         if (self.adView != nil && self.adView!.isAdValid) {
-//            self.adBannerToView(adView)
+            //            self.adBannerToView(adView)
         }
     }
     
     func adBannerToView(_ adView: UIView) {
-        view.addSubview(adView)
+        plugin.webView.superview?.addSubview(adView)
         
         plugin.webView.frame = CGRect(
             x: plugin.webView.bounds.origin.x,
@@ -59,11 +59,11 @@ class FBANBanner: FBANBase, FBAdViewDelegate {
             width: plugin.webView.bounds.width,
             height: plugin.webView.bounds.height - 50)
     }
-
+    
     func adViewDidClick(_ adView: FBAdView) {
         plugin.emit(eventType: FBANEvents.bannerClick)
     }
-
+    
     func adViewWillLogImpression(_ adView: FBAdView) {
         plugin.emit(eventType: FBANEvents.bannerImpression)
     }
