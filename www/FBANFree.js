@@ -87,6 +87,10 @@ exports.showBanner = function() {
     return execute('banner_show', bannerConfig('1345786662228899_1352655241542041'));
 }
 
+exports.hideBanner = function() {
+    return execute('banner_hide', {id: getAdUnitId('1345786662228899_1352655241542041')})
+}
+
 exports.showInterstitial = function() {
     return execute('interstitial_show', adConfig('1345786662228899_1352651671542398'));
 }

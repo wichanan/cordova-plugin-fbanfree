@@ -1,12 +1,13 @@
 @objc(FBANPlugin)
 class FBANPlugin: CDVPlugin {
     static let testAdID = ""
+    var isTestMode = true
     
     var readyCallbackId: String!
 
     override func pluginInitialize() {
         super.pluginInitialize()
-        
+        isTestMode = false
         FBANBase.plugin = self
     }
     
@@ -24,7 +25,7 @@ class FBANPlugin: CDVPlugin {
     func banner_show(command: CDVInvokedUrlCommand) {
         guard let opts = command.argument(at: 0) as? NSDictionary,
             let id = opts.value(forKey: "id") as? Int,
-            let placementID = opts.value(forKey: "placementID") as? String,
+            var placementID = opts.value(forKey: "placementID") as? String,
             let position = opts.value(forKey: "position") as? String,
             var banner = FBANBase.ads[id] as? FBANBanner?
             else {
@@ -32,8 +33,12 @@ class FBANPlugin: CDVPlugin {
                 self.commandDelegate!.send(result, callbackId: command.callbackId)
                 return
         }
+        
         if banner == nil {
             let adSize = getAdSize(opts)
+            if (isTestMode) {
+                placementID = FBANEvents.bannerAdTestType + placementID
+            }
             banner = FBANBanner(id: id, placementID: placementID, adSize: adSize, position: position)
         }
         
@@ -43,11 +48,27 @@ class FBANPlugin: CDVPlugin {
         self.commandDelegate!.send(result, callbackId: command.callbackId)
     }
     
+    @objc(banner_hide:)
+    func banner_hide(command: CDVInvokedUrlCommand) {
+        guard let opts = command.argument(at: 0) as? NSDictionary,
+            let id = opts.value(forKey: "id") as? Int,
+            let banner = FBANBase.ads[id] as? FBANBanner?
+            else {
+                let result = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: false)
+                self.commandDelegate!.send(result, callbackId: command.callbackId)
+                return
+        }
+        banner!.hide()
+        
+        let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: true)
+        self.commandDelegate!.send(result, callbackId: command.callbackId)
+    }
+    
     @objc(native_show:)
     func native_show(command: CDVInvokedUrlCommand) {
         guard let opts = command.argument(at: 0) as? NSDictionary,
             let id = opts.value(forKey: "id") as? Int,
-            let placementID = opts.value(forKey: "placementID") as? String,
+            var placementID = opts.value(forKey: "placementID") as? String,
             var native = FBANBase.ads[id] as? FBANNative?
             else {
                 let result = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: false)
@@ -56,6 +77,9 @@ class FBANPlugin: CDVPlugin {
         }
         
         if native == nil {
+            if (isTestMode == true) {
+                placementID = FBANEvents.nativeAdTestType + placementID
+            }
             native = FBANNative(id: id, placementID: placementID, adViewType: FBNativeAdViewType.dynamic)
         }
         
@@ -69,7 +93,7 @@ class FBANPlugin: CDVPlugin {
     func native_banner_show(command: CDVInvokedUrlCommand) {
         guard let opts = command.argument(at: 0) as? NSDictionary,
             let id = opts.value(forKey: "id") as? Int,
-            let placementID = opts.value(forKey: "placementID") as? String,
+            var placementID = opts.value(forKey: "placementID") as? String,
             var native_banner = FBANBase.ads[id] as? FBANNativeBanner?
             else {
                 let result = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: false)
@@ -78,6 +102,9 @@ class FBANPlugin: CDVPlugin {
         }
         
         if native_banner == nil {
+            if (isTestMode == true) {
+                placementID = FBANEvents.nativeBannerAdTestType + placementID
+            }
             native_banner = FBANNativeBanner(id: id, placementID: placementID, position: [:], adviewType: FBNativeBannerAdViewType.genericHeight50.rawValue)
         }
         
@@ -91,7 +118,7 @@ class FBANPlugin: CDVPlugin {
     func interstitial_show(command: CDVInvokedUrlCommand) {
         guard let opts = command.argument(at: 0) as? NSDictionary,
             let id = opts.value(forKey: "id") as? Int,
-            let placementID = opts.value(forKey: "placementID") as? String,
+            var placementID = opts.value(forKey: "placementID") as? String,
             var interstitial = FBANBase.ads[id] as? FBANInterstitial?
             else {
                 let result = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: false)
@@ -99,6 +126,9 @@ class FBANPlugin: CDVPlugin {
                 return
         }
         if interstitial == nil {
+            if (isTestMode == true) {
+                placementID = FBANEvents.interstitialAdTestType + placementID
+            }
             interstitial = FBANInterstitial(id: id, placementID: placementID)
         }
         interstitial!.show()
@@ -111,7 +141,7 @@ class FBANPlugin: CDVPlugin {
     func reward_video_show(command: CDVInvokedUrlCommand) {
         guard let opts = command.argument(at: 0) as? NSDictionary,
             let id = opts.value(forKey: "id") as? Int,
-            let placementID = opts.value(forKey: "placementID") as? String,
+            var placementID = opts.value(forKey: "placementID") as? String,
             var reward_video = FBANBase.ads[id] as? FBANRewardVideo?
             else {
                 let result = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: false)
@@ -119,6 +149,9 @@ class FBANPlugin: CDVPlugin {
                 return
         }
         if reward_video == nil {
+            if (isTestMode == true) {
+                placementID = FBANEvents.rewardVideoAdTestType + placementID
+            }
             reward_video = FBANRewardVideo(id: id, placementID: placementID)
         }
         reward_video!.show()

@@ -24,7 +24,20 @@ class FBANBanner: FBANBase, FBAdViewDelegate {
         let size: CGSize = view.bounds.size
         let yOffset: CGFloat = size.height - 50
         self.adView?.frame = CGRect(x: 0, y: yOffset, width: size.width, height: 50)
+        self.adBannerToView(self.adView)
         self.adView?.delegate = self
+    }
+    
+    func hide() {
+        if (adView?.superview) != nil {
+            adView.delegate = nil
+            adView.removeFromSuperview()
+            plugin.webView.frame = CGRect(
+                x: plugin.webView.bounds.origin.x,
+                y: plugin.webView.bounds.origin.y,
+                width: plugin.webView.bounds.width,
+                height: plugin.webView.bounds.height + 50)
+        }
     }
 
     func showBanner() {
@@ -33,78 +46,19 @@ class FBANBanner: FBANBase, FBAdViewDelegate {
 
     func adViewDidLoad(_ adView: FBAdView) {
         if (self.adView != nil && self.adView!.isAdValid) {
-            view.addSubview(self.adView!)
-            if #available(iOS 11.0, *) {
-                positionBannerInSafeArea(adView)
-
-                let background = UIView()
-                background.translatesAutoresizingMaskIntoConstraints = false
-                background.backgroundColor = .black
-                view.addSubview(background)
-                view.sendSubview(toBack: background)
-                NSLayoutConstraint.activate([
-                    background.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                    background.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                    background.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-                    background.topAnchor.constraint(equalTo: adView.topAnchor)
-                ])
-            } else {
-                positionBanner(adView)
-            }
+//            self.adBannerToView(adView)
         }
     }
-
-    @available (iOS 11, *)
-    func positionBannerInSafeArea(_ adView: UIView) {
-        let guide: UILayoutGuide = view.safeAreaLayoutGuide
-        var constraints = [
-            adView.centerXAnchor.constraint(equalTo: guide.centerXAnchor),
-            self.plugin.webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            self.plugin.webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        ]
-        //if position == "top" {
-        //    constraints += [
-        //        bannerView.topAnchor.constraint(equalTo: guide.topAnchor),
-        //        self.plugin.webView.topAnchor.constraint(equalTo: bannerView.bottomAnchor),
-        //       self.plugin.webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        //    ]
-        //} else {
-        constraints += [
-            adView.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
-            self.plugin.webView.topAnchor.constraint(equalTo: view.topAnchor),
-            self.plugin.webView.bottomAnchor.constraint(equalTo: adView.topAnchor),
-        ]
-        //}
-        NSLayoutConstraint.activate(constraints)
-    }
-
-    func positionBanner(_ adView: UIView) {
-        view.addConstraint(NSLayoutConstraint(item: adView,
-                                              attribute: .centerX,
-                                              relatedBy: .equal,
-                                              toItem: view,
-                                              attribute: .centerX,
-                                              multiplier: 1,
-                                              constant: 0))
-        //if position == "top" {
-        //    view.addConstraint(NSLayoutConstraint(item: bannerView,
-        //                                          attribute: .top,
-        //                                          relatedBy: .equal,
-        //                                          toItem: plugin.viewController.topLayoutGuide,
-        //                                          attribute: .top,
-        //                                          multiplier: 1,
-        //                                          constant: 0))
-        //} else {
-        view.addConstraint(NSLayoutConstraint(item: adView,
-                                              attribute: .bottom,
-                                              relatedBy: .equal,
-                                              toItem: plugin.viewController.bottomLayoutGuide,
-                                              attribute: .top,
-                                              multiplier: 1,
-                                              constant: 0))
-        //}
-    }
     
+    func adBannerToView(_ adView: UIView) {
+        view.addSubview(adView)
+        
+        plugin.webView.frame = CGRect(
+            x: plugin.webView.bounds.origin.x,
+            y: plugin.webView.bounds.origin.y,
+            width: plugin.webView.bounds.width,
+            height: plugin.webView.bounds.height - 50)
+    }
 
     func adViewDidClick(_ adView: FBAdView) {
         plugin.emit(eventType: FBANEvents.bannerClick)
