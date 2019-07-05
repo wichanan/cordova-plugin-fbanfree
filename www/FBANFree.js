@@ -83,6 +83,10 @@ function adConfig(placementID) {
     }
 }
 
+exports.ready = function() {
+    return execute('ready', {});
+}
+
 exports.showBanner = function(placementID) {
     return execute('banner_show', bannerConfig(placementID));
     // return execute('banner_show', bannerConfig('1345786662228899_1352655241542041'));

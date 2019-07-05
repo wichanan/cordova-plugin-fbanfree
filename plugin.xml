@@ -66,5 +66,6 @@
 		<source-file src="src/android/FBANFree.java" target-dir="src/fban/plugin" />
 		<source-file src="src/android/ads/AdBase.java" target-dir="src/fban/plugin/ads" />
 		<source-file src="src/android/ads/BannerAd.java" target-dir="src/fban/plugin/ads" />
+		<source-file src="src/android/ads/NativeAds.java" target-dir="src/fban/plugin/ads" />
 	</platform>
 </plugin>
