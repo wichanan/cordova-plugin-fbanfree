@@ -27,28 +27,6 @@ public class BannerAd extends AdBase {
     BannerAd(int id, String placementID, int gravity) {
         super(id, placementID);
         this.gravity = gravity;
-
-        adView.setAdListener(new AdListener() {
-            @Override
-            public void onError(Ad ad, AdError adError) {
-                Log.d(TAG, "Error showing ad with" + adError.getErrorMessage());
-            }
-
-            @Override
-            public void onAdLoaded(Ad ad) {
-                Log.d(TAG, "Ad loaded");
-            }
-
-            @Override
-            public void onAdClicked(Ad ad) {
-                Log.d(TAG, "Ad clicked" );
-            }
-
-            @Override
-            public void onLoggingImpression(Ad ad) {
-                Log.d(TAG, "ad impression");
-            }
-        });
     }
 
     public static boolean executeShowAction(Action action, CallbackContext callbackContext) {
@@ -73,6 +51,29 @@ public class BannerAd extends AdBase {
         return true;
     }
 
+    public static boolean executeHideAction(Action action, CallbackContext callbackContext) {
+        plugin.cordova.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                BannerAd bannerAd = (BannerAd) action.getAd();
+                if (bannerAd != null) {
+                    bannerAd.hide();
+                }
+
+                PluginResult result = new PluginResult(PluginResult.Status.OK, "");
+                callbackContext.sendPluginResult(result);
+            }
+        });
+
+        return true;
+    }
+
+    public void hide() {
+        if (adView != null) {
+            adView.setVisibility(View.GONE);
+        }
+    }
+
     public void show() {
         if (adView == null) {
             adView = new AdView(plugin.cordova.getActivity(), placementID, AdSize.BANNER_HEIGHT_50);
@@ -93,6 +94,28 @@ public class BannerAd extends AdBase {
                 adView.loadAd();
             }
         }
+
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onError(Ad ad, AdError adError) {
+                Log.d(TAG, "Error showing ad with" + adError.getErrorMessage());
+            }
+
+            @Override
+            public void onAdLoaded(Ad ad) {
+                Log.d(TAG, "Ad loaded");
+            }
+
+            @Override
+            public void onAdClicked(Ad ad) {
+                Log.d(TAG, "Ad clicked" );
+            }
+
+            @Override
+            public void onLoggingImpression(Ad ad) {
+                Log.d(TAG, "ad impression");
+            }
+        });
     }
 
     private void addBannerView(AdView adView) {

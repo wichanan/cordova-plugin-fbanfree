@@ -57,7 +57,7 @@ public class FBANFree extends CordovaPlugin {
             emit(Events.READY, data);
             return true;
         } else if (Actions.BANNER_HIDE.equals(actionKey)) {
-//            return BannerAd.executeHideAction(action, callbackContext);
+            return BannerAd.executeHideAction(action, callbackContext);
         } else if (Actions.BANNER_SHOW.equals(actionKey)) {
             return BannerAd.executeShowAction(action, callbackContext);
         }

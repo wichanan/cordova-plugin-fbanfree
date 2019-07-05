@@ -2,6 +2,7 @@ package fban.plugin;
 
 public final class Events {
     public static final String BANNER_CLICK = "fban.banner.click";
+    public static final String BANNER_LOAD = "fban.banner.load";
     public static final String BANNER_IMPRESSION = "fban.banner.impression";
     public static final String BANNER_LOAD_FAIL = "fban.banner.load_fail";
     public static final String INTERSTITIAL_CLICK = "fban.interstitial.click";
@@ -21,7 +22,13 @@ public final class Events {
     public static final String REWARD_VIDEO_SERVER_FAIL = "fban.reward_video.reward";
     public static final String REWARD_VIDEO_WILL_CLOSE = "fban.reward_video.start";
     public static final String NATIVE_CLICK = "fban.native.click";
+    public static final String NATIVE_LOAD = "fban.native.load";
     public static final String NATIVE_CLICK_FINISH = "fban.native.click_finish";
     public static final String NATIVE_IMPRESSION = "fban.native.impression";
-    public static final String NATIVE_LOAD_FAIL = "fban.native.load_fail";
+    public static final String NATIVE_LOAD_FAIL = "fban.native_banner.load_fail";
+    public static final String NATIVE_BANNER_CLICK = "fban.native_banner.click";
+    public static final String NATIVE_BANNER_LOAD = "fban.native_banner.load";
+    public static final String NATIVE_BANNER_CLICK_FINISH = "fban.native_banner.click_finish";
+    public static final String NATIVE_BANNER_IMPRESSION = "fban.native_banner.impression";
+    public static final String NATIVE_BANNER_LOAD_FAIL = "fban.native_banner.load_fail";
 }
