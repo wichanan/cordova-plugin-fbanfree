@@ -1,4 +1,4 @@
-package fban.plugin;
+package fban.plugin.ads;
 
 import android.util.SparseArray;
 
@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import fban.plugin.FBANFree;
+
 
 public abstract class AdBase {
     protected static FBANFree plugin;
@@ -44,12 +45,4 @@ public abstract class AdBase {
     public void destroy() {
         ads.remove(id);
     }
-
-    abstract String getLoadedEvent();
-    abstract String getFailedToLoadEvent();
-    abstract String getOpenedEvent();
-    abstract String getClosedEvent();
-    abstract String getLeftApplicationEvent();
-    String getImpressionEvent() { return null; }
-    String getClickedEvent() { return null; }
 }

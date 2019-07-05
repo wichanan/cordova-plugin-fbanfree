@@ -1,4 +1,4 @@
-package admob.plugin;
+package fban.plugin;
 
 final class Actions {
     static final String BANNER_HIDE = "banner_hide";

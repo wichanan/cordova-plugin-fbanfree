@@ -47,8 +47,8 @@
 	<platform name="android">
 		<preference name="ANDROID_SUPPORT_RECYCLERVIEW_VERSION" default="27+" />
 		<config-file parent="/*" target="res/xml/config.xml">
-			<feature name="FBAN">
-				<param name="android-package" value="fban.plugin.FBAN" />
+			<feature name="FBANFree">
+				<param name="android-package" value="fban.plugin.FBANFree" />
 			</feature>
 		</config-file>
 		<config-file target="AndroidManifest.xml" parent="/manifest/application">
@@ -61,8 +61,10 @@
 		<framework src="com.facebook.android:audience-network-sdk:5.+" />
 
         <source-file src="src/android/Actions.java" target-dir="src/fban/plugin" />
+        <source-file src="src/android/Action.java" target-dir="src/fban/plugin" />
         <source-file src="src/android/Events.java" target-dir="src/fban/plugin" />
 		<source-file src="src/android/FBANFree.java" target-dir="src/fban/plugin" />
 		<source-file src="src/android/ads/AdBase.java" target-dir="src/fban/plugin/ads" />
+		<source-file src="src/android/ads/BannerAd.java" target-dir="src/fban/plugin/ads" />
 	</platform>
 </plugin>
