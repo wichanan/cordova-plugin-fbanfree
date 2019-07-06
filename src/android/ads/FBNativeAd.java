@@ -18,13 +18,13 @@ import org.apache.cordova.PluginResult;
 import fban.plugin.Action;
 import fban.plugin.Events;
 
-public class NativeAds extends AdBase {
+public class FBNativeAd extends AdBase {
     private static final String TAG = "FBAN-Free()::NativeADs";
     private NativeAd nativeAd;
     private View nativeAdView;
     private ViewGroup parentView;
 
-    NativeAds(int id, String placementID) {
+    FBNativeAd(int id, String placementID) {
         super(id, placementID);
     }
 
@@ -33,14 +33,14 @@ public class NativeAds extends AdBase {
             @Override
             public void run() {
 
-                NativeAds nativeAds = (NativeAds) action.getAd();
-                if (nativeAds == null) {
-                    nativeAds = new NativeAds(
+                FBNativeAd fbNativeAd = (FBNativeAd) action.getAd();
+                if (fbNativeAd == null) {
+                    fbNativeAd = new FBNativeAd(
                             action.optId(),
                             action.getPlacementID()
                     );
                 }
-                nativeAds.show();
+                fbNativeAd.show();
                 PluginResult result = new PluginResult(PluginResult.Status.OK, "");
                 callbackContext.sendPluginResult(result);
             }
@@ -53,9 +53,9 @@ public class NativeAds extends AdBase {
         plugin.cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                BannerAd bannerAd = (BannerAd) action.getAd();
-                if (bannerAd != null) {
-                    bannerAd.hide();
+                FBNativeAd fbNativeAd = (FBNativeAd) action.getAd();
+                if (fbNativeAd != null) {
+                    fbNativeAd.hide();
                 }
 
                 PluginResult result = new PluginResult(PluginResult.Status.OK, "");
@@ -102,7 +102,7 @@ public class NativeAds extends AdBase {
 
             @Override
             public void onError(Ad ad, AdError adError) {
-                Log.d(TAG, "Error showing ad with" + adError.getErrorMessage());
+                Log.d(TAG, "Error loading ad with" + adError.getErrorMessage());
                 plugin.emit(Events.NATIVE_LOAD_FAIL);
             }
 

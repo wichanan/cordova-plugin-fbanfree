@@ -1,5 +1,6 @@
 package fban.plugin;
 
+import com.facebook.ads.AdSettings;
 import com.facebook.ads.AudienceNetworkAds;
 
 import org.apache.cordova.CordovaInterface;
@@ -16,10 +17,9 @@ import java.util.ArrayList;
 
 import fban.plugin.ads.AdBase;
 import fban.plugin.ads.BannerAd;
+import fban.plugin.ads.FBInterstitialAd;
+import fban.plugin.ads.FBNativeAd;
 
-/**
- * This class echoes a string called from JavaScript.
- */
 public class FBANFree extends CordovaPlugin {
 
     private static final String TAG = "AdMob-Plus";
@@ -33,6 +33,7 @@ public class FBANFree extends CordovaPlugin {
         super.initialize(cordova, webView);
         AudienceNetworkAds.initialize(cordova.getActivity());
         AdBase.initialize(this);
+        AdSettings.addTestDevice("ea9f55ac-cbc1-40d7-8cd0-4adddee3331f");
     }
 
     @Override
@@ -60,18 +61,14 @@ public class FBANFree extends CordovaPlugin {
             return BannerAd.executeHideAction(action, callbackContext);
         } else if (Actions.BANNER_SHOW.equals(actionKey)) {
             return BannerAd.executeShowAction(action, callbackContext);
+        } else if (Actions.NATIVE_SHOW.equals(actionKey)) {
+            return FBNativeAd.executeNativeShowAction(action, callbackContext);
+        } else if (Actions.NATIVE_HIDE.equals(actionKey)) {
+            return FBNativeAd.executeNativeHideAction(action, callbackContext);
+        } else if (Actions.INTERSTITIAL_SHOW.equals(actionKey)) {
+            return FBInterstitialAd.executeInterstitialShowAction(action, callbackContext);
         }
-//        else if (Actions.INTERSTITIAL_IS_LOADED.equals(actionKey)) {
-//            return InterstitialAd.executeIsLoadedAction(action, callbackContext);
-//        } else if (Actions.INTERSTITIAL_LOAD.equals(actionKey)) {
-//            return InterstitialAd.executeLoadAction(action, callbackContext);
-//        } else if (Actions.INTERSTITIAL_SHOW.equals(actionKey)) {
-//            return InterstitialAd.executeShowAction(action, callbackContext);
-//        } else if (Actions.REWARD_VIDEO_IS_READY.equals(actionKey)) {
-//            return RewardedVideoAd.executeIsReadyAction(action, callbackContext);
-//        } else if (Actions.REWARD_VIDEO_LOAD.equals(actionKey)) {
-//            return RewardedVideoAd.executeLoadAction(action, callbackContext);
-//        } else if (Actions.REWARD_VIDEO_SHOW.equals(actionKey)) {
+//        else if (Actions.REWARD_VIDEO_SHOW.equals(actionKey)) {
 //            return RewardedVideoAd.executeShowAction(action, callbackContext);
 //        }
 

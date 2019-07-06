@@ -1,7 +1,5 @@
 package fban.plugin.ads;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +10,12 @@ import com.facebook.ads.AdError;
 import com.facebook.ads.AdListener;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
+import com.facebook.ads.NativeAdLayout;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
+
+import java.util.ArrayList;
 
 import fban.plugin.Action;
 import fban.plugin.Events;
@@ -54,7 +55,9 @@ public class BannerAd extends AdBase {
             @Override
             public void run() {
                 BannerAd bannerAd = (BannerAd) action.getAd();
+                Log.d(TAG, "Trying to hide the banner 9999");
                 if (bannerAd != null) {
+                    Log.d(TAG, "Trying to hide the banner 988");
                     bannerAd.hide();
                 }
 
@@ -68,8 +71,32 @@ public class BannerAd extends AdBase {
 
     public void hide() {
         if (adView != null) {
-            Log.d(TAG, "tryin to hide the banner");
+            Log.d(TAG, "Trying to hide the banner");
             adView.setVisibility(View.GONE);
+
+            FrameLayout webView = (FrameLayout) plugin.webView.getView().getParent();
+            View view = plugin.webView.getView();
+
+            int count = webView.getChildCount();
+            ArrayList<View> views = new ArrayList<View>();
+            for (int i = 0; i<count; i++) {
+                View v = webView.getChildAt(i);
+                if (v instanceof NativeAdLayout) {
+                    views.add(v);
+                }
+            }
+
+            webView.removeView(view);
+            FrameLayout.LayoutParams webViewParams = new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    webView.getHeight()
+            );
+            view.setLayoutParams(webViewParams);
+            webView.addView(view);
+
+            for(int i = 0; i < views.size(); i++) {
+                views.get(i).bringToFront();
+            }
         }
     }
 
@@ -97,12 +124,13 @@ public class BannerAd extends AdBase {
         adView.setAdListener(new AdListener() {
             @Override
             public void onError(Ad ad, AdError adError) {
-                Log.d(TAG, "Error showing ad with" + adError.getErrorMessage());
+                Log.d(TAG, "Error loading ad with" + adError.getErrorMessage());
                 plugin.emit(Events.BANNER_LOAD_FAIL);
             }
 
             @Override
             public void onAdLoaded(Ad ad) {
+//                Log.d(TAG, "Ad loaded");
                 plugin.emit(Events.BANNER_LOAD);
             }
 
