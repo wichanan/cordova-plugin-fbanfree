@@ -16,6 +16,14 @@
   "devDependencies": {
     "cordova": "^9.0.0"
   },
+  "files": [
+    "*.ts",
+    "*.md",
+    "*.xml",
+    "src",
+    "ts",
+    "www"
+  ],
   "keywords": [
     "cordova",
     "facebookaudiencenetworkfree",

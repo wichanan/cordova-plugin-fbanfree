@@ -5,50 +5,6 @@ var exec = require('cordova/exec')
 /**
  * @ignore
  */
-function buildEvents(adType, eventKeys) {
-  return eventKeys.reduce((acc, eventKey) => {
-    acc[eventKey] = `admob.${adType}.events.${eventKey}`
-    return acc
-  }, {})
-}
-
-const bannerEvents = buildEvents('banner', [
-    'click',
-    'impression',
-    'load_fail',
-]);
-
-const interEvents = buildEvents('interstitial', [
-    'click',
-    'close',
-    'impression',
-    'load',
-    'load_fail',
-    'will_close'
-]);
-
-const rewardVideoEvents = buildEvents('interstitial', [
-    'click',
-    'close',
-    'complete',
-    'impression',
-    'load',
-    'load_fail',
-    'server_success',
-    'server_fail',
-    'will_close'
-]);
-
-const nativeEvents = buildEvents('interstitial', [
-    'click',
-    'click_finish',
-    'impression',
-    'load_fail',
-]);
-
-/**
- * @ignore
- */
 function execute(method, args) {
     return new Promise((resolve, reject) => {
         exec(resolve, reject, 'FBANFree', method, [args])
