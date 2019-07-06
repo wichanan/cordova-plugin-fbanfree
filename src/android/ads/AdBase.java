@@ -1,5 +1,6 @@
 package fban.plugin.ads;
 
+import android.content.Context;
 import android.util.SparseArray;
 
 import org.json.JSONException;
@@ -44,5 +45,9 @@ public abstract class AdBase {
 
     public void destroy() {
         ads.remove(id);
+    }
+
+    protected static float pxFromDp(final Context context, final float dp) {
+        return dp * context.getResources().getDisplayMetrics().density;
     }
 }

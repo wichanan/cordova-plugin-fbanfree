@@ -98,30 +98,29 @@ public class BannerAd extends AdBase {
             @Override
             public void onError(Ad ad, AdError adError) {
                 Log.d(TAG, "Error showing ad with" + adError.getErrorMessage());
-                AdBase.plugin.emit(Events.BANNER_LOAD_FAIL);
+                plugin.emit(Events.BANNER_LOAD_FAIL);
             }
 
             @Override
             public void onAdLoaded(Ad ad) {
-                AdBase.plugin.emit(Events.BANNER_LOAD);
+                plugin.emit(Events.BANNER_LOAD);
             }
 
             @Override
             public void onAdClicked(Ad ad) {
-                AdBase.plugin.emit(Events.BANNER_CLICK);
+                plugin.emit(Events.BANNER_CLICK);
             }
 
             @Override
             public void onLoggingImpression(Ad ad) {
-                AdBase.plugin.emit(Events.BANNER_IMPRESSION);
+                plugin.emit(Events.BANNER_IMPRESSION);
             }
         });
     }
 
     private void addBannerView(AdView adView) {
         float dip = 50f;
-        Resources r = plugin.webView.getView().getResources();
-        float px = pxFromDp(plugin.webView.getContext(), dip);
+        float px = AdBase.pxFromDp(plugin.webView.getContext(), dip);
 
         FrameLayout webView = (FrameLayout) plugin.webView.getView().getParent();
         int adPosition = webView.getHeight() - (int)Math.floor(px);
@@ -144,9 +143,5 @@ public class BannerAd extends AdBase {
         adView.setLayoutParams(params);
 
         webView.addView(adView);
-    }
-
-    private static float pxFromDp(final Context context, final float dp) {
-        return dp * context.getResources().getDisplayMetrics().density;
     }
 }

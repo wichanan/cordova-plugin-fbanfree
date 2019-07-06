@@ -1,15 +1,12 @@
 package fban.plugin.ads;
 
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
-import com.facebook.ads.AdListener;
-import com.facebook.ads.AdView;
 import com.facebook.ads.NativeAd;
 import com.facebook.ads.NativeAdListener;
 import com.facebook.ads.NativeAdView;
@@ -71,7 +68,6 @@ public class NativeAds extends AdBase {
 
     public void hide() {
         if (nativeAdView != null) {
-            Log.d(TAG, "tryin to hide the nativead");
             nativeAdView.setVisibility(View.GONE);
         }
     }
@@ -82,7 +78,6 @@ public class NativeAds extends AdBase {
             addNativeView(nativeAd);
             nativeAd.loadAd();
         } else if (nativeAdView.getVisibility() == View.GONE) {
-            Log.d(TAG, "already add to view");
             nativeAd.loadAd();
             nativeAdView.setVisibility(View.VISIBLE);
         } else {
@@ -102,62 +97,47 @@ public class NativeAds extends AdBase {
             @Override
             public void onMediaDownloaded(Ad ad) {
                 Log.d(TAG, "Media loaded");
+                plugin.emit(Events.NATIVE_MEDIA_LOAD);
             }
 
             @Override
             public void onError(Ad ad, AdError adError) {
-                Log.d(TAG, "err loaded" + adError.getErrorMessage());
+                Log.d(TAG, "Error showing ad with" + adError.getErrorMessage());
+                plugin.emit(Events.NATIVE_LOAD_FAIL);
             }
 
             @Override
             public void onAdLoaded(Ad ad) {
-                Log.d(TAG, "ad loaded");
+                plugin.emit(Events.NATIVE_LOAD);
             }
 
             @Override
             public void onAdClicked(Ad ad) {
-                Log.d(TAG, "ad clicked");
+                plugin.emit(Events.NATIVE_CLICK);
             }
 
             @Override
             public void onLoggingImpression(Ad ad) {
-                Log.d(TAG, "ad impression");
+                plugin.emit(Events.NATIVE_IMPRESSION);
             }
         });
     }
 
     private void addNativeView(NativeAd nativeAd) {
-        View view = plugin.webView.getView();
-        Log.d(TAG, "Add native ad to the parent view000");
         nativeAdView = NativeAdView.render(plugin.webView.getContext(), nativeAd);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 420);
-        params.setMargins(0, view.getHeight() - 420, 0, 0);
+        int adHeight = (int)AdBase.pxFromDp(plugin.webView.getContext(), 240f);
+
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, adHeight
+        );
+        View view = plugin.webView.getView();
+        FrameLayout webview = (FrameLayout) view.getParent();
+
+        webview.addView(nativeAdView);
+
+        int diffHeight = webview.getHeight() - view.getHeight();
+        int marginForAd = ((webview.getHeight() / 2) - adHeight) + diffHeight;
+        params.setMargins(0, marginForAd, 0, 0);
         nativeAdView.setLayoutParams(params);
-
-//        ViewGroup wvParentView = (ViewGroup) view.getParent();
-//        if (parentView == null) {
-//            parentView = new LinearLayout(plugin.webView.getContext());
-//        }
-//        Log.d(TAG, "Add native ad to the parent view111");
-//        if (wvParentView != null && wvParentView != parentView) {
-//            wvParentView.removeView(view);
-//            LinearLayout content = (LinearLayout) parentView;
-//            content.setOrientation(LinearLayout.VERTICAL);
-//            content.setGravity(Gravity.CENTER_VERTICAL);
-//            parentView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 0.0F));
-//            view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 420, 0.9F));
-//            parentView.addView(view);
-//            wvParentView.addView(parentView);
-//        }
-
-
-        Log.d(TAG, "Add native ad to the parent view");
-//        parentView.addView(
-//                nativeAdView,
-//                new LinearLayout.LayoutParams(nativeAdView.getWidth(), nativeAdView.getHeight())
-//        );
-//        parentView.bringToFront();
-//        parentView.requestLayout();
-//        parentView.requestFocus();
     }
 }
