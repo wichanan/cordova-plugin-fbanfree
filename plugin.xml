@@ -22,7 +22,8 @@
     
 	<dependency id="cordova-plugin-cocoapod-support"/>
 	<platform name="ios">
-		<pods-config ios-min-version="9.0" />
+		<preference name="PODFILE_VERSION" default="9.0" />
+		<pods-config ios-min-version="$PODFILE_VERSION" />
 
 		<config-file target="config.xml" parent="/*" >
 			<feature name="FBANFree">
