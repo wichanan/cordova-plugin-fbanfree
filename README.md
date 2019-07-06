@@ -75,5 +75,5 @@ fbanfree.showRewardedVideo('YOUR_PLACEMENT_ID')
 });
 ```
 
-[a relative link](LICENSE)
+[License](LICENSE)
 
