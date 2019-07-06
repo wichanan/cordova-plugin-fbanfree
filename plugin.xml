@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <plugin id="cordova-plugin-fbanfree"
-	version="0.0.1"
+	version="0.0.3"
 	xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android">
 	<name>FBANFree</name>
@@ -22,9 +22,6 @@
     
 	<dependency id="cordova-plugin-cocoapod-support"/>
 	<platform name="ios">
-		<preference name="PODFILE_VERSION" default="9.0" />
-		<pods-config ios-min-version="$PODFILE_VERSION" />
-
 		<config-file target="config.xml" parent="/*" >
 			<feature name="FBANFree">
 				<param name="ios-package" value="FBANPlugin" />

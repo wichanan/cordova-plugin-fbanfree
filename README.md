@@ -1,5 +1,9 @@
 ## Cordova Facebook Audience Network Free
 
+This Plugin uses the lastest version of `Facebook Audience Network` SDKs for Android and iOS
+to monetize the Audience Network ads on your Hybrid application
+
+
 ```
 Free
 Definition of free in English by oxforddictionaries:
@@ -18,13 +22,31 @@ cordova plugin add cordova-plugin-fbanfree
 
 ## Important(iOS)
 This Plugin uses `cordova-plugin-cocoapod-support` to generate the Podfile to match the min ios version in pod file
-you must check at `yourprojectDir/platforms/ios/Podfile` before using this plugin
-The Default is iOS 9
+you must check at `yourprojectDir/config.xml` before using this plugin
 
-you can change the add plugin command to
+add this
 ```
-cordova plugin add cordova-plugin-fbanfree --PODFILE_VERSION=11.0
+<platform name="ios">
+    ...
+    <preference name="pods_ios_min_version" value="11.0"/>
+    ...
+</platform>
 ```
+
+## Prerequisite(Android)
+
+The Audience network Android SDK requires the `android.support:recyclerview` suppoort library. Before the installation 
+please check the version of your project `recyclerview` and add another `--variable` to the `cordova plugin add`
+
+The default uses `27+`
+
+
+```
+cordova plugin add cordova-plugin-fbanfree --variable ANDROID_SUPPORT_RECYCLERVIEW_VERSION=20+
+```
+
+
+
 
 ## Usage
 
