@@ -41,6 +41,10 @@ class FBANBanner: FBANBase, FBAdViewDelegate {
     }
     
     func showBanner() {
+        if (adView?.superview == nil) {
+            prepareBanner()
+        }
+        
         self.adView?.loadAd()
     }
     
