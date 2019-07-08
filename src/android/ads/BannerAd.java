@@ -55,9 +55,7 @@ public class BannerAd extends AdBase {
             @Override
             public void run() {
                 BannerAd bannerAd = (BannerAd) action.getAd();
-                Log.d(TAG, "Trying to hide the banner 9999");
                 if (bannerAd != null) {
-                    Log.d(TAG, "Trying to hide the banner 988");
                     bannerAd.hide();
                 }
 
@@ -71,7 +69,6 @@ public class BannerAd extends AdBase {
 
     public void hide() {
         if (adView != null) {
-            Log.d(TAG, "Trying to hide the banner");
             adView.destroy();
             View view = plugin.webView.getView();
             FrameLayout webView = (FrameLayout) view.getParent();
@@ -110,7 +107,6 @@ public class BannerAd extends AdBase {
 
             @Override
             public void onAdLoaded(Ad ad) {
-//                Log.d(TAG, "Ad loaded");
                 plugin.emit(Events.BANNER_LOAD);
             }
 

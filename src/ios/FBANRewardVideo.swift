@@ -12,7 +12,6 @@ class FBANRewardVideo: FBANBase, FBRewardedVideoAdDelegate {
     }
 
     func rewardedVideoAdDidLoad(_ rewardedVideoAd: FBRewardedVideoAd) {
-        print("reward videio ad did load")
         if (rewardedVideoAd.isAdValid) {
             rewardedVideoAd.show(fromRootViewController: plugin.viewController)
         }
