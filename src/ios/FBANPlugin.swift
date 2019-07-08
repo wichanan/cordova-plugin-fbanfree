@@ -70,23 +70,23 @@ class FBANPlugin: CDVPlugin {
         guard let opts = command.argument(at: 0) as? NSDictionary,
             let id = opts.value(forKey: "id") as? Int,
             var placementID = opts.value(forKey: "placementID") as? String,
-            var position = opts.value(forKey: "position") as? NSDictionary,
+            let position = opts.value(forKey: "position") as? NSDictionary,
             var native = FBANBase.ads[id] as? FBANNative?
             else {
                 let result = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: false)
                 self.commandDelegate!.send(result, callbackId: command.callbackId)
                 return
         }
-        
+
         if native == nil {
             if (isTestMode == true) {
                 placementID = FBANEvents.nativeAdTestType + placementID
             }
             native = FBANNative(id: id, placementID: placementID, position: position, adViewType: FBNativeAdViewType.dynamic)
         }
-        
+
         native!.show()
-        
+
         let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: true)
         self.commandDelegate!.send(result, callbackId: command.callbackId)
     }
@@ -107,6 +107,17 @@ class FBANPlugin: CDVPlugin {
         self.commandDelegate!.send(result, callbackId: command.callbackId)
     }
     
+    @objc(native_hide_all:)
+    func native_hide_all(command: CDVInvokedUrlCommand) {
+        let native = FBANNative(id: 9999, placementID: "", position: [:], adViewType: FBNativeAdViewType.dynamic)
+        native.hideAll()
+        
+        FBANBase.ads.removeValue(forKey: 9999)
+        
+        let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: true)
+        self.commandDelegate!.send(result, callbackId: command.callbackId)
+    }
+    
     @objc(native_banner_show:)
     func native_banner_show(command: CDVInvokedUrlCommand) {
         guard let opts = command.argument(at: 0) as? NSDictionary,
@@ -114,17 +125,14 @@ class FBANPlugin: CDVPlugin {
             var placementID = opts.value(forKey: "placementID") as? String,
             var native_banner = FBANBase.ads[id] as? FBANNativeBanner?
             else {
-                print("failed with nothing")
                 let result = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: false)
                 self.commandDelegate!.send(result, callbackId: command.callbackId)
                 return
         }
-        print("trying to show the native banner444 324234f")
         if native_banner == nil {
             if (isTestMode == true) {
                 placementID = FBANEvents.nativeBannerAdTestType + placementID
             }
-            print("trying to show the native banner444 11111f")
             native_banner = FBANNativeBanner(id: id, placementID: placementID, position: [:], adviewType: FBNativeBannerAdViewType.genericHeight50.rawValue)
         }
 

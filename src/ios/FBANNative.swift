@@ -20,16 +20,30 @@ class FBANNative: FBANBase, FBNativeAdDelegate{
     }
 
     func show() {
-        self.nativeAd = FBNativeAd(placementID: placementID)
-        self.nativeAd?.delegate = self
-        self.nativeAd?.loadAd(withMediaCachePolicy: FBNativeAdsCachePolicy.all)
+        if (self.nativeAdView == nil) {
+            self.nativeAd = FBNativeAd(placementID: placementID)
+            self.nativeAd?.delegate = self
+            self.nativeAd?.loadAd(withMediaCachePolicy: FBNativeAdsCachePolicy.all)
+        } else {
+            self.nativeAd.delegate = self
+            showNativeAd()
+        }
+        
     }
     
     func hide() {
         if (self.nativeAdView?.superview != nil) {
             self.nativeAd.delegate = nil
-            self.nativeAdView.rootViewController = nil
             self.nativeAdView.removeFromSuperview()
+        }
+    }
+    
+    func hideAll() {
+        let allViews = view.subviews;
+        for childView in allViews {
+            if (childView.isKind(of: FBNativeAdView.self)) {
+                childView.removeFromSuperview()
+            }
         }
     }
 
@@ -41,7 +55,7 @@ class FBANNative: FBANBase, FBNativeAdDelegate{
         if (self.nativeAd != nil && self.nativeAd!.isAdValid) {
             self.nativeAdView = FBNativeAdView(nativeAd: self.nativeAd!, with: self.adViewType)
             
-            plugin.viewController.view.addSubview(self.nativeAdView)
+            view.addSubview(self.nativeAdView)
             
             let size: CGSize = plugin.viewController.view.bounds.size
             let yOffset: CGFloat = self.position?.value(forKey: "top") as! CGFloat

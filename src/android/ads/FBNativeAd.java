@@ -34,7 +34,6 @@ public class FBNativeAd extends AdBase {
 
     FBNativeAd(int id, String placementID, JSONObject position) {
         super(id, placementID);
-        Log.d(TAG,"initialize the native with position:" + position.toString());
         this.position = position;
     }
 
