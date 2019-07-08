@@ -8,7 +8,7 @@ class FBANPlugin: CDVPlugin {
     override func pluginInitialize() {
         super.pluginInitialize()
         
-        isTestMode = true
+        isTestMode = false
         FBANBase.plugin = self
     }
     
@@ -70,6 +70,7 @@ class FBANPlugin: CDVPlugin {
         guard let opts = command.argument(at: 0) as? NSDictionary,
             let id = opts.value(forKey: "id") as? Int,
             var placementID = opts.value(forKey: "placementID") as? String,
+            var position = opts.value(forKey: "position") as? NSDictionary,
             var native = FBANBase.ads[id] as? FBANNative?
             else {
                 let result = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: false)
@@ -81,7 +82,7 @@ class FBANPlugin: CDVPlugin {
             if (isTestMode == true) {
                 placementID = FBANEvents.nativeAdTestType + placementID
             }
-            native = FBANNative(id: id, placementID: placementID, adViewType: FBNativeAdViewType.dynamic)
+            native = FBANNative(id: id, placementID: placementID, position: position, adViewType: FBNativeAdViewType.dynamic)
         }
         
         native!.show()

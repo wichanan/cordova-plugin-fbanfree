@@ -2,16 +2,17 @@ class FBANNative: FBANBase, FBNativeAdDelegate{
     var nativeAd: FBNativeAd!
     var nativeAdView: FBNativeAdView!
     var adViewType: FBNativeAdViewType!
-    var position: String!
+    var position: NSDictionary!
 
     var view: UIView {
         return self.plugin.viewController.view
     }
 
-    init(id: Int, placementID: String, adViewType: FBNativeAdViewType) {
+    init(id: Int, placementID: String, position: NSDictionary, adViewType: FBNativeAdViewType) {
         super.init(id: id, placementID: placementID)
 
         self.adViewType = adViewType
+        self.position = position
     }
 
     deinit {
@@ -43,7 +44,7 @@ class FBANNative: FBANBase, FBNativeAdDelegate{
             plugin.viewController.view.addSubview(self.nativeAdView)
             
             let size: CGSize = plugin.viewController.view.bounds.size
-            let yOffset: CGFloat = (size.height / 2) - 210
+            let yOffset: CGFloat = self.position?.value(forKey: "top") as! CGFloat
             self.nativeAdView.frame = CGRect(x: 0, y: yOffset, width: size.width, height: 420)
         }
     }

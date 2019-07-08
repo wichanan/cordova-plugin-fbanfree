@@ -39,6 +39,14 @@ function adConfig(placementID) {
     }
 }
 
+function nativeConfig(data) {
+    return {
+        position: data.position,
+        placementID: data.placementID,
+        id: getAdUnitId(data.placementID)
+    }
+}
+
 exports.ready = function() {
     return execute('ready', {});
 }
@@ -59,8 +67,9 @@ exports.showRewardedVideo = function(placementID) {
     return execute('reward_video_show', adConfig(placementID));
 }
 
-exports.showNative = function(placementID) {
-    return execute('native_show', adConfig(placementID));
+exports.showNative = function(data) {
+
+    return execute('native_show', nativeConfig(data));
 }
 
 exports.hideNative = function(placementID) {
