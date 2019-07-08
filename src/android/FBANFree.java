@@ -1,5 +1,7 @@
 package fban.plugin;
 
+import android.util.Log;
+
 import com.facebook.ads.AdSettings;
 import com.facebook.ads.AudienceNetworkAds;
 
@@ -65,12 +67,11 @@ public class FBANFree extends CordovaPlugin {
             return FBNativeAd.executeNativeShowAction(action, callbackContext);
         } else if (Actions.NATIVE_HIDE.equals(actionKey)) {
             return FBNativeAd.executeNativeHideAction(action, callbackContext);
+        }else if (Actions.NATIVE_HIDE_ALL.equals(actionKey)) {
+            return FBNativeAd.executeNativeHideAllAction(action, callbackContext);
         } else if (Actions.INTERSTITIAL_SHOW.equals(actionKey)) {
             return FBInterstitialAd.executeInterstitialShowAction(action, callbackContext);
         }
-//        else if (Actions.REWARD_VIDEO_SHOW.equals(actionKey)) {
-//            return RewardedVideoAd.executeShowAction(action, callbackContext);
-//        }
 
         return false;
     }

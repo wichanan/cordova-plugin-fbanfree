@@ -7,13 +7,20 @@ import android.widget.FrameLayout;
 
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
 import com.facebook.ads.NativeAd;
+import com.facebook.ads.NativeAdLayout;
 import com.facebook.ads.NativeAdListener;
 import com.facebook.ads.NativeAdView;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+
+import java.util.ArrayList;
 
 import fban.plugin.Action;
 import fban.plugin.Events;
@@ -23,9 +30,12 @@ public class FBNativeAd extends AdBase {
     private NativeAd nativeAd;
     private View nativeAdView;
     private ViewGroup parentView;
+    private JSONObject position;
 
-    FBNativeAd(int id, String placementID) {
+    FBNativeAd(int id, String placementID, JSONObject position) {
         super(id, placementID);
+        Log.d(TAG,"initialize the native with position:" + position.toString());
+        this.position = position;
     }
 
     public static boolean executeNativeShowAction(Action action, CallbackContext callbackContext) {
@@ -37,7 +47,8 @@ public class FBNativeAd extends AdBase {
                 if (fbNativeAd == null) {
                     fbNativeAd = new FBNativeAd(
                             action.optId(),
-                            action.getPlacementID()
+                            action.getPlacementID(),
+                            action.optPosition()
                     );
                 }
                 fbNativeAd.show();
@@ -66,9 +77,42 @@ public class FBNativeAd extends AdBase {
         return true;
     }
 
+    public static boolean executeNativeHideAllAction(Action action, CallbackContext callbackContext) {
+        plugin.cordova.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                FBNativeAd fbNativeAd = (FBNativeAd) action.getAd();
+                if (fbNativeAd != null) {
+                    fbNativeAd.hideAll();
+                }
+
+                PluginResult result = new PluginResult(PluginResult.Status.OK, "");
+                callbackContext.sendPluginResult(result);
+            }
+        });
+
+        return true;
+    }
+
     public void hide() {
         if (nativeAdView != null) {
-            nativeAdView.setVisibility(View.GONE);
+            View view = plugin.webView.getView();
+            FrameLayout webView = (FrameLayout) view.getParent();
+            nativeAd.destroy();
+            webView.removeView(nativeAdView);
+        }
+    }
+
+    public void hideAll() {
+        View view = plugin.webView.getView();
+        FrameLayout webView = (FrameLayout) view.getParent();
+
+        int count = webView.getChildCount();
+        for (int i = 0; i<count; i++) {
+            View v = webView.getChildAt(i);
+            if (v instanceof NativeAdLayout) {
+                webView.removeView(v);
+            }
         }
     }
 
@@ -76,22 +120,12 @@ public class FBNativeAd extends AdBase {
         if (nativeAdView == null) {
             nativeAd = new NativeAd(plugin.webView.getContext(), placementID);
             addNativeView(nativeAd);
-            nativeAd.loadAd();
-        } else if (nativeAdView.getVisibility() == View.GONE) {
-            nativeAd.loadAd();
-            nativeAdView.setVisibility(View.VISIBLE);
         } else {
-            View view = plugin.webView.getView();
-            ViewGroup wvParentView = (ViewGroup) view.getParent();
-            if (parentView != wvParentView) {
-                parentView.removeAllViews();
-                if (parentView.getParent() != null) {
-                    ((ViewGroup)parentView.getParent()).removeView(parentView);
-                }
-                addNativeView(nativeAd);
-                nativeAd.loadAd();
-            }
+            nativeAd.destroy();
+            nativeAd = new NativeAd(plugin.webView.getContext(), placementID);
+            addNativeView(nativeAd);
         }
+        nativeAd.loadAd();
 
         nativeAd.setAdListener(new NativeAdListener() {
             @Override
@@ -135,9 +169,8 @@ public class FBNativeAd extends AdBase {
 
         webview.addView(nativeAdView);
 
-        int diffHeight = webview.getHeight() - view.getHeight();
-        int marginForAd = ((webview.getHeight() / 2) - adHeight) + diffHeight;
-        params.setMargins(0, marginForAd, 0, 0);
+        params.setMargins(0, (int)position.optDouble("top"), 0, 0);
         nativeAdView.setLayoutParams(params);
+        nativeAdView.bringToFront();
     }
 }

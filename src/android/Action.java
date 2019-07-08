@@ -6,18 +6,18 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Action {
-    private JSONObject opts;
+    public JSONObject opts;
 
     Action(JSONArray args) {
         this.opts = args.optJSONObject(0);
     }
 
     public int optId() {
-        return opts.optInt("id");
+        return this.opts.optInt("id");
     }
 
-    public String optPosition() {
-        return opts.optString("position");
+    public JSONObject optPosition() {
+        return this.opts.optJSONObject("position");
     }
 
     public AdBase getAd() {

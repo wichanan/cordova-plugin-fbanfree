@@ -14,6 +14,7 @@ final class Actions {
     static final String SET_APP_VOLUME = "set_app_volume";
     static final String NATIVE_SHOW = "native_show";
     static final String NATIVE_HIDE = "native_hide";
+    static final String NATIVE_HIDE_ALL = "native_hide_all";
     static final String NATIVE_BANNER_SHOW = "native_banner_show";
     static final String NATIVE_NANNER_HIDE = "native_banner_hide";
 }

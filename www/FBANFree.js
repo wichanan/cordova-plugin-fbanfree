@@ -60,7 +60,7 @@ exports.hideBanner = function(placementID) {
 }
 
 exports.showInterstitial = function(placementID) {
-    return execute('interstitial_show', adConfig(placementID));
+    return execute('interstitial_show', nativeConfig(placementID));
 }
 
 exports.showRewardedVideo = function(placementID) {
@@ -74,6 +74,10 @@ exports.showNative = function(data) {
 
 exports.hideNative = function(placementID) {
     return execute('native_hide', {id: getAdUnitId(placementID)})
+}
+
+exports.hideAllNative = function() {
+    return execute('native_hide_all', {})
 }
 
 exports.showNativeBanner = function(placementID) {

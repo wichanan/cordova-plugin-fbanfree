@@ -72,19 +72,9 @@ public class BannerAd extends AdBase {
     public void hide() {
         if (adView != null) {
             Log.d(TAG, "Trying to hide the banner");
-            adView.setVisibility(View.GONE);
-
-            FrameLayout webView = (FrameLayout) plugin.webView.getView().getParent();
+            adView.destroy();
             View view = plugin.webView.getView();
-
-            int count = webView.getChildCount();
-            ArrayList<View> views = new ArrayList<View>();
-            for (int i = 0; i<count; i++) {
-                View v = webView.getChildAt(i);
-                if (v instanceof NativeAdLayout) {
-                    views.add(v);
-                }
-            }
+            FrameLayout webView = (FrameLayout) view.getParent();
 
             webView.removeView(view);
             FrameLayout.LayoutParams webViewParams = new FrameLayout.LayoutParams(
@@ -94,9 +84,7 @@ public class BannerAd extends AdBase {
             view.setLayoutParams(webViewParams);
             webView.addView(view);
 
-            for(int i = 0; i < views.size(); i++) {
-                views.get(i).bringToFront();
-            }
+            bringNativeAdsToFront();
         }
     }
 
@@ -104,22 +92,14 @@ public class BannerAd extends AdBase {
         if (adView == null) {
             adView = new AdView(plugin.cordova.getActivity(), placementID, AdSize.BANNER_HEIGHT_50);
             addBannerView(adView);
-            adView.loadAd();
-        } else if (adView.getVisibility() == View.GONE) {
-            adView.loadAd();
-            adView.setVisibility(View.VISIBLE);
         } else {
-            View view = plugin.webView.getView();
-            ViewGroup wvParentView = (ViewGroup) view.getParent();
-            if (parentView != wvParentView) {
-                parentView.removeAllViews();
-                if (parentView.getParent() != null) {
-                    ((ViewGroup)parentView.getParent()).removeView(parentView);
-                }
-                addBannerView(adView);
-                adView.loadAd();
-            }
+            adView.destroy();
+            adView = new AdView(plugin.cordova.getActivity(), placementID, AdSize.BANNER_HEIGHT_50);
+            addBannerView(adView);
         }
+        bringNativeAdsToFront();
+
+        adView.loadAd();
 
         adView.setAdListener(new AdListener() {
             @Override
@@ -147,15 +127,18 @@ public class BannerAd extends AdBase {
     }
 
     private void addBannerView(AdView adView) {
+        View view = plugin.webView.getView();
         float dip = 50f;
         float px = AdBase.pxFromDp(plugin.webView.getContext(), dip);
 
-        FrameLayout webView = (FrameLayout) plugin.webView.getView().getParent();
+        FrameLayout webView = (FrameLayout) view.getParent();
         int adPosition = webView.getHeight() - (int)Math.floor(px);
 
-        View view = plugin.webView.getView();
-
         webView.removeView(view);
+
+        if (adView.getParent() != null) {
+            webView.removeView(adView);
+        }
         FrameLayout.LayoutParams webViewParams = new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 adPosition
@@ -171,5 +154,23 @@ public class BannerAd extends AdBase {
         adView.setLayoutParams(params);
 
         webView.addView(adView);
+    }
+
+    private void bringNativeAdsToFront() {
+        View view = plugin.webView.getView();
+        FrameLayout webView = (FrameLayout) view.getParent();
+
+        int count = webView.getChildCount();
+        ArrayList<View> views = new ArrayList<View>();
+        for (int i = 0; i<count; i++) {
+            View v = webView.getChildAt(i);
+            if (v instanceof NativeAdLayout) {
+                views.add(v);
+            }
+        }
+
+        for(int i = 0; i < views.size(); i++) {
+            views.get(i).bringToFront();
+        }
     }
 }
