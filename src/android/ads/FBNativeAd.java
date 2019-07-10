@@ -34,6 +34,7 @@ public class FBNativeAd extends AdBase {
 
     FBNativeAd(int id, String placementID, JSONObject position) {
         super(id, placementID);
+
         this.position = position;
     }
 
@@ -81,10 +82,14 @@ public class FBNativeAd extends AdBase {
             @Override
             public void run() {
                 FBNativeAd fbNativeAd = (FBNativeAd) action.getAd();
-                if (fbNativeAd != null) {
-                    fbNativeAd.hideAll();
+                if (fbNativeAd == null) {
+                    fbNativeAd = new FBNativeAd(
+                            action.optId(),
+                            "",
+                            new JSONObject()
+                    );
                 }
-
+                fbNativeAd.hideAll();
                 PluginResult result = new PluginResult(PluginResult.Status.OK, "");
                 callbackContext.sendPluginResult(result);
             }
