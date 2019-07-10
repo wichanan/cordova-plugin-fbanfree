@@ -70,20 +70,6 @@ public class BannerAd extends AdBase {
     }
 
     public void hide(boolean withParam) {
-//        if (adView != null) {
-//            adView.destroy();
-//            adView.removeAllViews();
-//            View view = plugin.webView.getView();
-//            FrameLayout webView = (FrameLayout) view.getParent();
-//            webView.removeView(view);
-//            FrameLayout.LayoutParams webViewParams = new FrameLayout.LayoutParams(
-//                    ViewGroup.LayoutParams.MATCH_PARENT,
-//                    webView.getHeight()
-//            );
-//            view.setLayoutParams(webViewParams);
-//            webView.addView(view);
-//            bringNativeAdsToFront();
-//        }
         if (adView != null) {
             adView.destroy();
             adView.removeAllViews();
@@ -146,35 +132,6 @@ public class BannerAd extends AdBase {
     }
 
     private void addBannerView(AdView adView) {
-//        View view = plugin.webView.getView();
-//        float dip = 50f;
-//        float px = AdBase.pxFromDp(plugin.webView.getContext(), dip);
-//
-//        FrameLayout webView = (FrameLayout) view.getParent();
-//        int adPosition = webView.getHeight() - (int)Math.floor(px);
-//
-//        webView.removeView(view);
-//
-//        if (adView.getParent() != null) {
-//            webView.removeView(adView);
-//        }
-//        FrameLayout.LayoutParams webViewParams = new FrameLayout.LayoutParams(
-//                ViewGroup.LayoutParams.MATCH_PARENT,
-//                adPosition
-//        );
-//        view.setLayoutParams(webViewParams);
-//
-//        webView.addView(view);
-//
-//        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-//                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
-//        );
-//        params.setMargins(0, adPosition, 0, 0);
-//        adView.setLayoutParams(params);
-//
-//        webView.addView(adView);
-//        webView.bringToFront();
-//        webView.requestLayout();
         View view = plugin.webView.getView();
         ViewGroup wvParentView = (ViewGroup) view.getParent();
         if (parentView == null) {
