@@ -34,6 +34,7 @@ public class FBNativeAd extends AdBase {
 
     FBNativeAd(int id, String placementID, JSONObject position) {
         super(id, placementID);
+
         this.position = position;
     }
 
@@ -81,10 +82,14 @@ public class FBNativeAd extends AdBase {
             @Override
             public void run() {
                 FBNativeAd fbNativeAd = (FBNativeAd) action.getAd();
-                if (fbNativeAd != null) {
-                    fbNativeAd.hideAll();
+                if (fbNativeAd == null) {
+                    fbNativeAd = new FBNativeAd(
+                            action.optId(),
+                            "",
+                            new JSONObject()
+                    );
                 }
-
+                fbNativeAd.hideAll();
                 PluginResult result = new PluginResult(PluginResult.Status.OK, "");
                 callbackContext.sendPluginResult(result);
             }
@@ -96,21 +101,29 @@ public class FBNativeAd extends AdBase {
     public void hide() {
         if (nativeAdView != null) {
             View view = plugin.webView.getView();
-            FrameLayout webView = (FrameLayout) view.getParent();
             nativeAd.destroy();
-            webView.removeView(nativeAdView);
+
+            if (view.getParent() != null) {
+                ((ViewGroup)view.getParent()).removeView(view);
+            }
+            parentView.addView(view);
+
+            parentView.removeView(nativeAdView);
+
+            parentView.bringToFront();
+            parentView.requestLayout();
+            parentView.requestFocus();
         }
     }
 
     public void hideAll() {
         View view = plugin.webView.getView();
-        FrameLayout webView = (FrameLayout) view.getParent();
-
-        int count = webView.getChildCount();
-        for (int i = 0; i<count; i++) {
-            View v = webView.getChildAt(i);
+        ViewGroup wvParentView = (ViewGroup) view.getParent();
+        int countwv = wvParentView.getChildCount();
+        for (int i = 0; i<countwv; i++) {
+            View v = wvParentView.getChildAt(i);
             if (v instanceof NativeAdLayout) {
-                webView.removeView(v);
+                wvParentView.removeView(v);
             }
         }
     }
@@ -120,11 +133,20 @@ public class FBNativeAd extends AdBase {
             nativeAd = new NativeAd(plugin.webView.getContext(), placementID);
             addNativeView(nativeAd);
         } else {
-            nativeAd.destroy();
+            View view = plugin.webView.getView();
+            ViewGroup wvParentView = (ViewGroup) view.getParent();
+            if (parentView != wvParentView) {
+                parentView.removeAllViews();
+                if (parentView.getParent() != null) {
+                    ((ViewGroup)parentView.getParent()).removeView(parentView);
+                }
+            }
             nativeAd = new NativeAd(plugin.webView.getContext(), placementID);
             addNativeView(nativeAd);
         }
-        nativeAd.loadAd();
+        if (!nativeAd.isAdLoaded()) {
+            nativeAd.loadAd();
+        }
 
         nativeAd.setAdListener(new NativeAdListener() {
             @Override
@@ -157,19 +179,32 @@ public class FBNativeAd extends AdBase {
     }
 
     private void addNativeView(NativeAd nativeAd) {
+        Log.d(TAG, "Trying native show");
         nativeAdView = NativeAdView.render(plugin.webView.getContext(), nativeAd);
-        int adHeight = (int)AdBase.pxFromDp(plugin.webView.getContext(), 240f);
+        int adHeight = (int)AdBase.pxFromDp(plugin.webView.getContext(), 290f);
 
+        View view = plugin.webView.getView();
+        ViewGroup wvParentView = (ViewGroup) view.getParent();
+        if (parentView == null) {
+            parentView = new FrameLayout(plugin.webView.getContext());
+        }
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, adHeight
         );
-        View view = plugin.webView.getView();
-        FrameLayout webview = (FrameLayout) view.getParent();
+        if (wvParentView != null && wvParentView != parentView) {
+            wvParentView.removeView(view);
 
-        webview.addView(nativeAdView);
+            parentView.addView(view);
+            wvParentView.addView(parentView);
+        }
 
-        params.setMargins(0, (int)position.optDouble("top"), 0, 0);
+        params.setMargins(0, (int) position.optDouble("top"), 0, 0);
+
         nativeAdView.setLayoutParams(params);
-        nativeAdView.bringToFront();
+
+        parentView.addView(nativeAdView);
+        parentView.bringToFront();
+        parentView.requestLayout();
+        parentView.requestFocus();
     }
 }

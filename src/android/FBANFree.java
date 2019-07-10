@@ -24,7 +24,7 @@ import fban.plugin.ads.FBNativeAd;
 
 public class FBANFree extends CordovaPlugin {
 
-    private static final String TAG = "AdMob-Plus";
+    private static final String TAG = "FBANFree()";
 
     private CallbackContext readyCallbackContext = null;
 
@@ -68,7 +68,13 @@ public class FBANFree extends CordovaPlugin {
         } else if (Actions.NATIVE_HIDE.equals(actionKey)) {
             return FBNativeAd.executeNativeHideAction(action, callbackContext);
         }else if (Actions.NATIVE_HIDE_ALL.equals(actionKey)) {
-            return FBNativeAd.executeNativeHideAllAction(action, callbackContext);
+            try {
+                action.opts.put("id", 9999);
+                return FBNativeAd.executeNativeHideAllAction(action, callbackContext);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         } else if (Actions.INTERSTITIAL_SHOW.equals(actionKey)) {
             return FBInterstitialAd.executeInterstitialShowAction(action, callbackContext);
         }
