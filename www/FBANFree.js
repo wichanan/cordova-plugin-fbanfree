@@ -60,7 +60,7 @@ exports.hideBanner = function(placementID) {
 }
 
 exports.showInterstitial = function(placementID) {
-    return execute('interstitial_show', nativeConfig(placementID));
+    return execute('interstitial_show', adConfig(placementID));
 }
 
 exports.showRewardedVideo = function(placementID) {
