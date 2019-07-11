@@ -59,12 +59,21 @@ exports.hideBanner = function(placementID) {
     return execute('banner_hide', {id: getAdUnitId(placementID)});
 }
 
+exports.loadInterstitial = function(placementID) {
+    return execute('interstitial_load', adConfig(placementID));
+}
+
 exports.showInterstitial = function(placementID) {
     return execute('interstitial_show', adConfig(placementID));
 }
 
 exports.showRewardedVideo = function(placementID) {
     return execute('reward_video_show', adConfig(placementID));
+}
+
+exports.loadNative = function(data) {
+
+    return execute('native_load', nativeConfig(data));
 }
 
 exports.showNative = function(data) {

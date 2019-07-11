@@ -20,6 +20,27 @@ public class FBInterstitialAd extends AdBase {
         super(id, placementID);
     }
 
+    public static boolean executeInterstitialLoadAction(Action action, CallbackContext callbackContext) {
+        plugin.cordova.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                FBInterstitialAd fbInterstitialAd = (FBInterstitialAd) action.getAd();
+                if (fbInterstitialAd == null) {
+                    fbInterstitialAd = new FBInterstitialAd(
+                            action.optId(),
+                            action.getPlacementID()
+                    );
+                }
+                fbInterstitialAd.load();
+                PluginResult result = new PluginResult(PluginResult.Status.OK, "");
+                callbackContext.sendPluginResult(result);
+            }
+        });
+
+        return true;
+    }
+
     public static boolean executeInterstitialShowAction(Action action, CallbackContext callbackContext) {
         plugin.cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -42,9 +63,14 @@ public class FBInterstitialAd extends AdBase {
     }
 
     public void show() {
+        if (interstitialAd != null) {
+            interstitialAd.show();
+        }
+    }
+
+    public void load() {
         if (interstitialAd == null) {
             interstitialAd = new InterstitialAd(plugin.webView.getContext(), placementID);
-
         }
         interstitialAd.loadAd();
 
@@ -67,7 +93,6 @@ public class FBInterstitialAd extends AdBase {
 
             @Override
             public void onAdLoaded(Ad ad) {
-                interstitialAd.show();
                 plugin.emit(Events.INTERSTITIAL_LOAD);
             }
 

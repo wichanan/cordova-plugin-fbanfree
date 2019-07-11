@@ -5,17 +5,20 @@ class FBANInterstitial: FBANBase, FBInterstitialAdDelegate {
         interstitialAd = nil
     }
 
-    func show() {
+    func load() {
         self.interstitialAd = FBInterstitialAd(placementID: self.placementID)
         self.interstitialAd!.delegate = self
         self.interstitialAd!.load()
     }
 
-    func interstitialAdDidLoad(_ interstitialAd: FBInterstitialAd) {
-        print("Inter ad did load")
-        if (interstitialAd.isAdValid) {
+    func show() {
+        if (self.interstitialAd != nil) {
             interstitialAd.show(fromRootViewController: plugin.viewController)
         }
+    }
+
+    func interstitialAdDidLoad(_ interstitialAd: FBInterstitialAd) {
+        print("Inter ad did load")
     }
 
     func interstitialAdDidClick(_ interstitialAd: FBInterstitialAd) {

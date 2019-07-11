@@ -64,9 +64,9 @@ class FBANPlugin: CDVPlugin {
         let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: true)
         self.commandDelegate!.send(result, callbackId: command.callbackId)
     }
-    
-    @objc(native_show:)
-    func native_show(command: CDVInvokedUrlCommand) {
+
+    @objc(native_load:)
+    func native_load(command: CDVInvokedUrlCommand) {
         guard let opts = command.argument(at: 0) as? NSDictionary,
             let id = opts.value(forKey: "id") as? Int,
             var placementID = opts.value(forKey: "placementID") as? String,
@@ -83,6 +83,31 @@ class FBANPlugin: CDVPlugin {
                 placementID = FBANEvents.nativeAdTestType + placementID
             }
             native = FBANNative(id: id, placementID: placementID, position: position, adViewType: FBNativeAdViewType.dynamic)
+        }
+
+        native!.load()
+
+        let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: true)
+        self.commandDelegate!.send(result, callbackId: command.callbackId)
+    }
+    
+    @objc(native_show:)
+    func native_show(command: CDVInvokedUrlCommand) {
+        guard let opts = command.argument(at: 0) as? NSDictionary,
+            let id = opts.value(forKey: "id") as? Int,
+            var placementID = opts.value(forKey: "placementID") as? String,
+            let position = opts.value(forKey: "position") as? NSDictionary,
+            var native = FBANBase.ads[id] as? FBANNative?
+            else {
+                let result = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: false)
+                self.commandDelegate!.send(result, callbackId: command.callbackId)
+                return
+        }
+
+        if native == nil {
+            let result = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Must load the native before showing")
+            self.commandDelegate!.send(result, callbackId: command.callbackId)
+            return
         }
 
         native!.show()
@@ -141,9 +166,9 @@ class FBANPlugin: CDVPlugin {
         let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: true)
         self.commandDelegate!.send(result, callbackId: command.callbackId)
     }
-    
-    @objc(interstitial_show:)
-    func interstitial_show(command: CDVInvokedUrlCommand) {
+
+    @objc(interstitial_load:)
+    func interstitial_load(command: CDVInvokedUrlCommand) {
         guard let opts = command.argument(at: 0) as? NSDictionary,
             let id = opts.value(forKey: "id") as? Int,
             var placementID = opts.value(forKey: "placementID") as? String,
@@ -158,6 +183,28 @@ class FBANPlugin: CDVPlugin {
                 placementID = FBANEvents.interstitialAdTestType + placementID
             }
             interstitial = FBANInterstitial(id: id, placementID: placementID)
+        }
+        interstitial!.load()
+        
+        let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: true)
+        self.commandDelegate!.send(result, callbackId: command.callbackId)
+    }
+    
+    @objc(interstitial_show:)
+    func interstitial_show(command: CDVInvokedUrlCommand) {
+        guard let opts = command.argument(at: 0) as? NSDictionary,
+            let id = opts.value(forKey: "id") as? Int,
+            var placementID = opts.value(forKey: "placementID") as? String,
+            var interstitial = FBANBase.ads[id] as? FBANInterstitial?
+            else {
+                let result = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: false)
+                self.commandDelegate!.send(result, callbackId: command.callbackId)
+                return
+        }
+        if interstitial == nil {
+            let result = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Must load the native before showing")
+            self.commandDelegate!.send(result, callbackId: command.callbackId)
+            return
         }
         interstitial!.show()
         

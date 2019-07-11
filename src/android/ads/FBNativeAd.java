@@ -38,6 +38,28 @@ public class FBNativeAd extends AdBase {
         this.position = position;
     }
 
+    public static boolean executeNativeLoadAction(Action action, CallbackContext callbackContext) {
+        plugin.cordova.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                FBNativeAd fbNativeAd = (FBNativeAd) action.getAd();
+                if (fbNativeAd == null) {
+                    fbNativeAd = new FBNativeAd(
+                            action.optId(),
+                            action.getPlacementID(),
+                            action.optPosition()
+                    );
+                }
+                fbNativeAd.load();
+                PluginResult result = new PluginResult(PluginResult.Status.OK, "");
+                callbackContext.sendPluginResult(result);
+            }
+        });
+
+        return true;
+    }
+
     public static boolean executeNativeShowAction(Action action, CallbackContext callbackContext) {
         plugin.cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -128,6 +150,15 @@ public class FBNativeAd extends AdBase {
         }
     }
 
+    public void load() {
+        if (nativeAd == null) {
+            nativeAd = new NativeAd(plugin.webView.getContext(), placementID);
+            if (!nativeAd.isAdLoaded()) {
+                nativeAd.loadAd();
+            }
+        }
+    }
+
     public void show() {
         if (nativeAdView == null) {
             nativeAd = new NativeAd(plugin.webView.getContext(), placementID);
@@ -143,9 +174,6 @@ public class FBNativeAd extends AdBase {
             }
             nativeAd = new NativeAd(plugin.webView.getContext(), placementID);
             addNativeView(nativeAd);
-        }
-        if (!nativeAd.isAdLoaded()) {
-            nativeAd.loadAd();
         }
 
         nativeAd.setAdListener(new NativeAdListener() {

@@ -19,12 +19,14 @@ class FBANNative: FBANBase, FBNativeAdDelegate{
         self.nativeAd = nil
     }
 
+    func load () {
+        self.nativeAd = FBNativeAd(placementID: placementID)
+        self.nativeAd?.delegate = self
+        self.nativeAd?.loadAd(withMediaCachePolicy: FBNativeAdsCachePolicy.all)
+    }
+
     func show() {
         if (self.nativeAdView == nil) {
-            self.nativeAd = FBNativeAd(placementID: placementID)
-            self.nativeAd?.delegate = self
-            self.nativeAd?.loadAd(withMediaCachePolicy: FBNativeAdsCachePolicy.all)
-        } else {
             self.nativeAd.delegate = self
             showNativeAd()
         }

@@ -5,10 +5,16 @@ class FBANRewardVideo: FBANBase, FBRewardedVideoAdDelegate {
         rewardedVideoAd = nil
     }
 
-    func show() {
+    func load() {
         self.rewardedVideoAd = FBRewardedVideoAd(placementID: placementID)
         self.rewardedVideoAd!.delegate = self
         self.rewardedVideoAd!.load()
+    }
+
+    func show () {
+        if (rewardedVideoAd != nil) {
+            rewardedVideoAd.show(fromRootViewController: plugin.viewController)
+        }
     }
 
     func rewardedVideoAdDidLoad(_ rewardedVideoAd: FBRewardedVideoAd) {

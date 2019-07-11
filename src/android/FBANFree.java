@@ -63,6 +63,8 @@ public class FBANFree extends CordovaPlugin {
             return BannerAd.executeHideAction(action, callbackContext);
         } else if (Actions.BANNER_SHOW.equals(actionKey)) {
             return BannerAd.executeShowAction(action, callbackContext);
+        } else if (Actions.NATIVE_LOAD.equals(actionKey)) {
+            return FBNativeAd.executeNativeLoadAction(action, callbackContext);
         } else if (Actions.NATIVE_SHOW.equals(actionKey)) {
             return FBNativeAd.executeNativeShowAction(action, callbackContext);
         } else if (Actions.NATIVE_HIDE.equals(actionKey)) {
@@ -77,6 +79,8 @@ public class FBANFree extends CordovaPlugin {
 
         } else if (Actions.INTERSTITIAL_SHOW.equals(actionKey)) {
             return FBInterstitialAd.executeInterstitialShowAction(action, callbackContext);
+        } else if (Actions.INTERSTITIAL_LOAD.equals(actionKey)) {
+            return FBInterstitialAd.executeInterstitialLoadAction(action, callbackContext);
         }
 
         return false;
