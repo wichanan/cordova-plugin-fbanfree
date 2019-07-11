@@ -20,7 +20,9 @@ class FBANBanner: FBANBase, FBAdViewDelegate {
     }
     
     func prepareBanner() {
-        self.adView = FBAdView(placementID: self.placementID, adSize: self.adSize, rootViewController: plugin.viewController)
+        if (self.adView == nil) {
+            self.adView = FBAdView(placementID: self.placementID, adSize: self.adSize, rootViewController: plugin.viewController)
+        }
         let size: CGSize = view.bounds.size
         let yOffset: CGFloat = size.height - 50
         self.adView?.frame = CGRect(x: 0, y: yOffset, width: size.width, height: 50)
@@ -41,10 +43,7 @@ class FBANBanner: FBANBase, FBAdViewDelegate {
     }
     
     func showBanner() {
-        if (adView?.superview == nil) {
-            prepareBanner()
-        }
-        
+        prepareBanner()
         self.adView?.loadAd()
     }
     
