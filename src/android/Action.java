@@ -1,6 +1,6 @@
-package fban.plugin;
+package com.appodeal;
 
-import fban.plugin.ads.AdBase;
+import com.appodeal.ads.AdBase;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
