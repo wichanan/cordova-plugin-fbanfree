@@ -7,7 +7,11 @@ var exec = require('cordova/exec')
  */
 function execute(method, args) {
     return new Promise((resolve, reject) => {
-        exec(resolve, reject, 'FBANFree', method, [args])
+        exec(function(event) {
+            resolve(event);
+        }, function(err) {
+            reject(err);
+        }, 'FBANFree', method, [args]);
     });
 }
 
@@ -48,7 +52,14 @@ function nativeConfig(data) {
 }
 
 exports.ready = function() {
-    return execute('ready', {});
+    return new Promise((resolve, reject) => {
+        exec(function(event) {
+            fireDocumentEvent(event.type, event.data);
+            resolve(event.data);
+        }, function(err) {
+            reject(err);
+        }, 'FBANFree', 'ready');
+    });
 }
 
 exports.showBanner = function(placementID) {
